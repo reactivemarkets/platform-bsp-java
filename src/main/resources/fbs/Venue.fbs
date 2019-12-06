@@ -1,0 +1,17 @@
+// -*- idl -*-
+// Copyright (C) 2019 Reactive Markets Limited. All rights reserved.
+
+namespace com.reactivemarkets.encoding.fbs;
+
+// A Venue represents a trading venue where execution takes place, such as an Exchange, ECN or
+// Principal trading desk.
+table Venue {
+    // Numeric identifier.
+    id: int;
+    // Machine-readable identifier.
+    symbol: string (required);
+    // Human-readable description.
+    display: string (required);
+    // Flags to describe venue attributes
+    flags: uint16 = 0;
+}

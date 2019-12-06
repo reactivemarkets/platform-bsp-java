@@ -1,0 +1,55 @@
+// -*- idl -*-
+// Copyright (C) 2019 Reactive Markets Limited. All rights reserved.
+
+include "Asset.fbs";
+include "Exec.fbs";
+include "Instr.fbs";
+include "Market.fbs";
+include "MarketData.fbs";
+include "MarketInfo.fbs";
+include "Order.fbs";
+include "Posn.fbs";
+include "PublicTrade.fbs";
+include "RevalRates.fbs";
+include "Venue.fbs";
+include "FullAmount.fbs";
+
+file_identifier "RMKS";
+file_extension "rmks";
+
+namespace com.reactivemarkets.encoding.fbs;
+
+// Order is consistent with SBE.
+union Body {
+    Asset,
+    Instr,
+    Venue,
+    Market,
+    Order,
+    Exec,
+    Posn,
+    MarketData,
+    MarketInfo,
+    RevalRates,
+    PublicTrade,
+    FullAmount
+}
+
+table Message {
+    // Transmit timestamp. The difference between rts and tts should provide an indicative measure
+    // of processing or service time.
+    tts: long (id: 0);
+    // Receive timestamp. This is the time that the application first observed the input event. The
+    // reactor cycle time may be used for this purpose.
+    rts: long (id: 1);
+    // Session identifier.
+    sid: int (id: 2);
+    // Bitset of protocol attributes or flags.
+    options: ushort (id: 3);
+    // Reserved for future use.
+    padding: ushort (id: 4);
+    // Message body.
+    body: Body (id: 6);
+}
+
+root_type Message;

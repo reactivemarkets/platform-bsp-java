@@ -1,0 +1,14 @@
+// -*- idl -*-
+// Copyright (C) 2019 Reactive Markets Limited. All rights reserved.
+
+namespace com.reactivemarkets.encoding.fbs;
+
+table Posn {
+    accnt: string (required);
+    market: string (required);
+    settl_date: int;
+    buy_qty: double;
+    buy_cost: double;
+    sell_qty: double;
+    sell_cost: double;
+}

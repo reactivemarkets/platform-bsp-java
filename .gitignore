@@ -1,0 +1,12 @@
+# Editors and IDEs.
+*~
+.editorconfig
+.gradle
+.idea
+.vscode
+
+# OSX.
+.DS_Store
+
+# Build.
+build/

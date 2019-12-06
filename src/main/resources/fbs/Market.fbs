@@ -1,0 +1,31 @@
+// -*- idl -*-
+// Copyright (C) 2019 Reactive Markets Limited. All rights reserved.
+
+namespace com.reactivemarkets.encoding.fbs;
+
+// A Market is where parties provide prices to "make a market" on a single Instrument. The Market
+// defines the Market specific conventions for trading that Instrument.
+table Market {
+    // Machine-readable identifier.
+    symbol: string (required);
+    // The next hop routing venue.
+    venue: string;
+    // The underlying instrument.
+    instr: string;
+    // The liquidity pool or price tier.
+    pool: int16 = 0;
+    // The last day of trading.
+    expiry_date: int;
+    // Default lots for order entry.
+    default_lots: long;
+    // Lot-size numerator.
+    lot_numer: int = 1;
+    // Lot-size denominator.
+    lot_denom: int = 1;
+    // Tick-size numerator.
+    tick_numer: int = 1;
+    // Tick-size denominator.
+    tick_denom: int = 100;
+    // Price display decimal places.
+    price_dp: int16 = 2;
+}

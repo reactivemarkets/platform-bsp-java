@@ -1,0 +1,15 @@
+// -*- idl -*-
+// Copyright (C) 2019 Reactive Markets Limited. All rights reserved.
+
+namespace com.reactivemarkets.encoding.fbs;
+
+table MarketInfo {
+    // Market identifier.
+    market: string (required);
+    // Bitset describing the state of the market.
+    // These flags may be used to populate a FIX TradSesStatus <340> field with one or more of the
+    // following values: Halted, Open, Closed, Pre-Open, Pre-Close.
+    market_state: uint;
+    // The current settlement date.
+    settl_date: int;
+}

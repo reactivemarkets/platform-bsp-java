@@ -1,0 +1,19 @@
+// -*- idl -*-
+// Copyright (C) 2019 Reactive Markets Limited. All rights reserved.
+
+include "Enum.fbs";
+
+namespace com.reactivemarkets.encoding.fbs;
+
+// An Asset is an item with intrinsic value that can be traded electronically, such as a bond,
+// commodity, currency or equity.
+table Asset {
+    // Numeric identifier. ISO 4217 number for currencies.
+    id: int16;
+    // Machine-readable identifier.
+    symbol: string (required);
+    // Human-readable description.
+    display: string (required);
+    // The asset type.
+    asset_type: AssetType;
+}

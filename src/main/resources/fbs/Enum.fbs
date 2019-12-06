@@ -1,0 +1,127 @@
+// -*- idl -*-
+// Copyright (C) 2019 Reactive Markets Limited. All rights reserved.
+
+namespace com.reactivemarkets.encoding.fbs;
+
+enum AssetType: int16 {
+    None = 0,
+    // Commodity.
+    Cmdty,
+    // Corporate Bond.
+    Corp,
+    // Currency.
+    Ccy,
+    // Equity.
+    Eqty,
+    // Government Bond.
+    Govt,
+    // Index.
+    Index,
+    // Crypto.
+    Crypto
+}
+
+enum Direct: int16 {
+    // Aggressor sold; taker hit the bid.
+    Given = -1,
+    None = 0,
+    // Aggressor bought; taker lifted the offer.
+    Paid = 1
+}
+
+enum InstrType: int16 {
+    None = 0,
+    SpotFwd,
+    Future,
+    CFD
+}
+
+enum LiqInd: int16 {
+    // No liquidity indicator.
+    None = 0,
+    // Passive buyer or seller that receives the spread.
+    Maker,
+    // Aggressive buyer or seller that crosses the market and pays the spread.
+    Taker
+}
+
+enum ExecType: int16 {
+    None = 0,
+    // New order execution type.
+    New,
+    // Revise order execution type.
+    Revised,
+    // Cancel order execution type.
+    Cancelled,
+    // Trade execution type.
+    Trade,
+    // Reject execution type.
+    Rejected,
+    // Stopped execution type.
+    Stopped,
+    // Expired execution type.
+    Expired,
+    // Pending new execution type.
+    PendingNew,
+    // Pending revise execution type.
+    PendingRevise,
+    // Pending cancel execution type.
+    PendingCancel,
+    // Pending suspend execution type
+    PendingSuspend,
+    // Suspended execution type
+    Suspended,
+    // Pending resume execution type
+    PendingResume
+}
+
+enum OrderType: int16 {
+    None = 0,
+    Limit,
+    Market
+}
+
+enum SettlType: int16 {
+    None = 0,
+    Physical,
+    Cash
+}
+
+enum Side: int16 {
+    Sell = -1,
+    None = 0,
+    Buy = 1
+}
+
+enum StratType: int16 {
+    None = 0,
+    GTC,
+    IOC,
+    FOK
+}
+
+enum TimeType: int16 {
+    None = 0,
+    GTC,
+    IOC,
+    FOK
+}
+
+enum SubReqType: int16 {
+    Snapshot = 0,
+    Subscribe,
+    Unsubscribe
+}
+
+enum MarketDataFlag: uint16 {
+    Level3 = 1,
+    Bucketed = 2,
+    NonSweepable = 4,
+    Tradeable = 8,
+    FullAmountLadder = 16
+}
+
+enum VenueFlag: uint16 {
+    OrderBook = 1,
+    FullAmount = 2
+}

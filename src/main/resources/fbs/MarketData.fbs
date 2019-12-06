@@ -1,0 +1,53 @@
+// -*- idl -*-
+// Copyright (C) 2019 Reactive Markets Limited. All rights reserved.
+
+include "Enum.fbs";
+
+namespace com.reactivemarkets.encoding.fbs;
+
+struct MDEntry {
+    // Zero-based level index.
+    level: int;
+    venue_id: int;
+    qty: double;
+    price: double;
+}
+
+struct MDLevel {
+    qty: double;
+    price: double;
+    avg_price: double;
+    // Number of orders comprising this level.
+    count: int;
+}
+
+struct MDTrade {
+    trans_ts: long;
+    side: Direct;
+    qty: double;
+    price: double;
+}
+
+table MarketData {
+    accnt: string;
+    // Market identifier.
+    market: string (required);
+    // Bitset that describes features of the market-data.
+    flags: uint16 = 0;
+    // Optional identifier or sequence number. This should be limited in scope by source and symbol.
+    // Systems should also consider limiting the scope by time, such as session, day or week.
+    id: string;
+    // Original request identifier.
+    // Typically mapped to the FIX MDReqID <262> field.
+    request_id: string;
+    // Last trade in this market. May be used to visually indicate market direction.
+    last_trade: MDTrade;
+    // Level-2 bid data.
+    bid_l2: [MDLevel];
+    // Level-2 offer data.
+    offer_l2: [MDLevel];
+    // Level-3 bid data.
+    bid_l3: [MDEntry];
+    // Level-3 offer data.
+    offer_l3: [MDEntry];
+}

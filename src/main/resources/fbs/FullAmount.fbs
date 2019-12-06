@@ -1,0 +1,31 @@
+// -*- idl -*-
+// Copyright (C) 2019 Reactive Markets Limited. All rights reserved.
+
+namespace com.reactivemarkets.encoding.fbs;
+
+table FAEntry {
+    // flag to show if FAEntry is valid, or not. 
+    // Note, it may still contain data
+    flags: uint16;
+    venue_id: int;
+    bids: [FALevel];
+    offers: [FALevel];
+}
+
+struct FALevel {
+    qty: double;
+    price: double;
+}
+
+table FullAmount {
+    // Market identifier.
+    market: string (required);
+    // Optional identifier or sequence number. This should be limited in scope by source and symbol.
+    // Systems should also consider limiting the scope by time, such as session, day or week.
+    id: string;
+    // Original request identifier.
+    // Typically mapped to the FIX MDReqID <262> field.
+    request_id: string;
+    // Entries - one per LP
+    entries: [FAEntry];
+}

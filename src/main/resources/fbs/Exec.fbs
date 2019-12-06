@@ -1,0 +1,39 @@
+// -*- idl -*-
+// Copyright (C) 2019 Reactive Markets Limited. All rights reserved.
+
+include "Enum.fbs";
+
+namespace com.reactivemarkets.encoding.fbs;
+
+table Exec {
+    trans_ts: long;
+    user: string;
+    accnt: string (required);
+    market: string (required);
+    exec_id: string (required);
+    order_id: string;
+    cl_order_id: string;
+    strat_type: string;
+    // Adjacent enums for improved packing.
+    side: Side;
+    order_type: OrderType = 1;
+    time_type: TimeType;
+    exec_type: ExecType;
+    // --
+    qty: double;
+    price: double;
+    min_qty: double = 1;
+    resd_qty: double;
+    cum_qty: double;
+    cum_cost: double;
+    last_qty: double;
+    last_price: double;
+    prev_qty: double;
+    // The settlement date at the time of transaction.
+    settl_date: int;
+    match_id: string;
+    liq_ind: LiqInd;
+    // Underyling execution venue.
+    exec_venue: string;
+    cpty: string;
+}

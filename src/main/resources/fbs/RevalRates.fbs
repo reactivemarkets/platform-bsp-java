@@ -1,0 +1,13 @@
+// -*- idl -*-
+// Copyright (C) 2019 Reactive Markets Limited. All rights reserved.
+
+namespace com.reactivemarkets.encoding.fbs;
+
+table RevalRates {
+    // Optional identifier or sequence number.
+    id: string;
+    // Array of Asset identifiers.
+    asset_id: [int16] (required);
+    // Array of Spot mid rates facing USD.
+    rate: [double] (required);
+}

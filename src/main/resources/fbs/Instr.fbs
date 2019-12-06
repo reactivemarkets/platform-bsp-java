@@ -1,0 +1,35 @@
+// -*- idl -*-
+// Copyright (C) 2019 Reactive Markets Limited. All rights reserved.
+
+include "Enum.fbs";
+
+namespace com.reactivemarkets.encoding.fbs;
+
+// An Instrument is a contract by which two parties can agree terms to trade an underlying Asset.
+// Instrument types include Spot, Forward, Future or Option.
+table Instr {
+    // Numeric identifier.
+    id: int;
+    // Machine-readable identifier.
+    symbol: string (required);
+    // Human-readable description.
+    display: string (required);
+    // Human-readable long description.
+    description: string (required);
+    // The base asset.
+    base_asset: string (required);
+    // The term currency.
+    term_ccy: string (required);
+    // The tenor or delivery month.
+    tenor: string;
+    // CCY, EQTY, GOVT, etc.
+    asset_type: AssetType;
+    // SpotFwd, Future or CFD.
+    instr_type: InstrType;
+    // Cash or Physical delivery.
+    settl_type: SettlType;
+    // Conventional pip decimal places.
+    pip_dp: int16;
+    // Conventional pip digits.
+    pip_digits: int16 = 2;
+}
