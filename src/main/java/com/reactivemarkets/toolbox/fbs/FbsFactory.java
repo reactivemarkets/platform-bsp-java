@@ -29,10 +29,10 @@ import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
-public final class Factory {
+public final class FbsFactory {
     private static final Charset CHARSET = StandardCharsets.UTF_8;
 
-    private Factory() {
+    private FbsFactory() {
     }
 
     public static ChannelInboundHandler newFbsDecoder() {

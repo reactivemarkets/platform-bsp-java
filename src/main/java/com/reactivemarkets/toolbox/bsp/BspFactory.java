@@ -18,19 +18,31 @@ package com.reactivemarkets.toolbox.bsp;
 
 import io.netty.channel.ChannelInboundHandler;
 import io.netty.channel.ChannelOutboundHandler;
+import io.netty.channel.EventLoopGroup;
+import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
 import io.netty.handler.codec.LengthFieldPrepender;
 
 import java.nio.ByteOrder;
 
-import static com.reactivemarkets.toolbox.bsp.Constants.INITIAL_BYTES_TO_STRIP;
-import static com.reactivemarkets.toolbox.bsp.Constants.LENGTH_ADJUSTMENT;
-import static com.reactivemarkets.toolbox.bsp.Constants.LENGTH_FIELD_LENGTH;
-import static com.reactivemarkets.toolbox.bsp.Constants.LENGTH_FIELD_OFFSET;
-import static com.reactivemarkets.toolbox.bsp.Constants.MAX_FRAME_LENGTH;
+import static com.reactivemarkets.toolbox.bsp.BspConstants.INITIAL_BYTES_TO_STRIP;
+import static com.reactivemarkets.toolbox.bsp.BspConstants.LENGTH_ADJUSTMENT;
+import static com.reactivemarkets.toolbox.bsp.BspConstants.LENGTH_FIELD_LENGTH;
+import static com.reactivemarkets.toolbox.bsp.BspConstants.LENGTH_FIELD_OFFSET;
+import static com.reactivemarkets.toolbox.bsp.BspConstants.MAX_FRAME_LENGTH;
 
-public final class Factory {
-    private Factory() {
+public final class BspFactory {
+    private BspFactory() {
+    }
+
+    public static EventLoopGroup newBspEventLoopGroup() {
+        // Single-threaded event group.
+        return new NioEventLoopGroup(1);
+    }
+
+    public static BspClient newBspClient(final EventLoopGroup group, final BspHandler handler,
+                                         final BspConfig config) {
+        return new BspClientImpl(group, handler, config);
     }
 
     public static ChannelInboundHandler newBspDecoder() {
