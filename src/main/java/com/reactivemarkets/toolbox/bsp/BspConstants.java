@@ -16,7 +16,7 @@
 
 package com.reactivemarkets.toolbox.bsp;
 
-public final class Constants {
+public final class BspConstants {
     /**
      * The maximum length of the frame.
      * <p>
@@ -41,6 +41,6 @@ public final class Constants {
      */
     public static final int INITIAL_BYTES_TO_STRIP = 4;
 
-    private Constants() {
+    private BspConstants() {
     }
 }
