@@ -2,6 +2,24 @@
 
 The Reactive Platform API for Java.
 
+## Building
+
+### Linux/Mac
+
+```bash
+git clone https://github.com/reactivemarkets/toolbox-java
+cd toolbox-java
+./gradlew build
+```
+
+### Windows
+
+```bash
+git clone https://github.com/reactivemarkets/toolbox-java
+cd toolbox-java
+./gradlew.bat build
+```
+
 ## Contributing
 
 Please read [CONTRIBUTING.md](CONTRIBUTING.md) for details on our code of conduct, and the process
