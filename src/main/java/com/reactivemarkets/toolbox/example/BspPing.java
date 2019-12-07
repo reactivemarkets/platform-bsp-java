@@ -14,25 +14,37 @@
  * limitations under the License.
  */
 
-package com.reactivemarkets.toolbox.bsp.example;
+package com.reactivemarkets.toolbox.example;
 
+import com.google.flatbuffers.FlatBufferBuilder;
+import com.reactivemarkets.encoding.fbs.Asset;
+import com.reactivemarkets.encoding.fbs.AssetType;
+import com.reactivemarkets.encoding.fbs.Body;
+import com.reactivemarkets.encoding.fbs.Message;
 import com.reactivemarkets.toolbox.bsp.BspClient;
 import com.reactivemarkets.toolbox.bsp.BspConfig;
 import com.reactivemarkets.toolbox.bsp.BspHandler;
+import com.reactivemarkets.toolbox.time.HighResolutionClock;
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
 import io.netty.channel.EventLoopGroup;
 import org.apache.log4j.BasicConfigurator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.nio.ByteBuffer;
 import java.util.concurrent.TimeUnit;
 
+import static com.reactivemarkets.toolbox.bsp.BspConstants.MAX_MESSAGE_SIZE;
 import static com.reactivemarkets.toolbox.bsp.BspFactory.newBspClient;
 import static com.reactivemarkets.toolbox.bsp.BspFactory.newBspEventLoopGroup;
 
 public final class BspPing implements BspHandler {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(BspPing.class);
+    private static final ThreadLocal<FlatBufferBuilder> BUILDER =
+        ThreadLocal.withInitial(() -> new FlatBufferBuilder(MAX_MESSAGE_SIZE));
 
     private static final int HB_INT = 5;
     private static final String HOST = "localhost";
@@ -56,8 +68,16 @@ public final class BspPing implements BspHandler {
     }
 
     @Override
-    public void onBspMessage(final BspClient client, final String msg) {
-        LOGGER.info("onBspMessage: " + msg);
+    public void onBspMessage(final BspClient client, final ByteBuf msg) {
+        LOGGER.info("onBspMessage: " + msg.readableBytes());
+
+        final ByteBuffer bb = msg.nioBuffer();
+        final Message root = Message.getRootAsMessage(bb);
+        final long timestamp = root.tts();
+        final byte type = root.bodyType();
+
+        LOGGER.info("timestamp: " + timestamp);
+        LOGGER.info("type: " + (int) type);
     }
 
     @Override
@@ -67,10 +87,6 @@ public final class BspPing implements BspHandler {
     }
 
     public static void main(final String[] args) throws Exception {
-
-        // Run with the following VM options:
-        // --add-opens java.base/jdk.internal.misc=ALL-UNNAMED
-        // -Dio.netty.tryReflectionSetAccessible=true
 
         BasicConfigurator.configure();
         final EventLoopGroup group = newBspEventLoopGroup();
@@ -83,7 +99,7 @@ public final class BspPing implements BspHandler {
                     LOGGER.info("sending message batch");
                     try {
                         for (int j = 0; j < 5; ++j) {
-                            client.write("hello");
+                            client.write(newMessage());
                             ++count;
                         }
                         client.flush();
@@ -98,5 +114,25 @@ public final class BspPing implements BspHandler {
         } finally {
             group.shutdownGracefully();
         }
+    }
+
+    private static ByteBuf newMessage() {
+        final FlatBufferBuilder builder = BUILDER.get();
+        builder.clear();
+
+        final int symbolOffset = builder.createString("EUR");
+        final int displayOffset = builder.createString("Euro Member Countries, Euro");
+        final int bodyOffset = Asset.createAsset(builder, (short) 1, symbolOffset, displayOffset,
+            AssetType.Ccy);
+
+        Message.startMessage(builder);
+        Message.addTts(builder, HighResolutionClock.epochNanos());
+        Message.addBodyType(builder, Body.Asset);
+        Message.addBody(builder, bodyOffset);
+
+        final int message = Message.endMessage(builder);
+        builder.finish(message);
+
+        return Unpooled.copiedBuffer(builder.dataBuffer());
     }
 }

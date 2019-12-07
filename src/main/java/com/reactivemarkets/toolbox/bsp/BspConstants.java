@@ -41,6 +41,17 @@ public final class BspConstants {
      */
     public static final int INITIAL_BYTES_TO_STRIP = 4;
 
+    /**
+     * Maximum message size.
+     * This upper-bound for message payloads was chosen as follows:
+     * <ul>
+     * <li>Max Datagram (1472) - Aeron Header (32) = 1440</li>
+     * <li>Round-down to cache-line boundary: (1440 & ~63) = 1408</li>
+     * <li>Subtract MPMC queue header: 1408 - 8 = 1400</li>
+     * </ul>
+     */
+    public static final int MAX_MESSAGE_SIZE = 1400;
+
     private BspConstants() {
     }
 }

@@ -16,6 +16,8 @@
 
 package com.reactivemarkets.toolbox.bsp;
 
+import io.netty.buffer.ByteBuf;
+
 public interface BspHandler {
     /**
      * Called when a connection to the remote service is established.
@@ -42,7 +44,7 @@ public interface BspHandler {
      * @param client The client.
      * @param msg The message.
      */
-    void onBspMessage(BspClient client, String msg);
+    void onBspMessage(BspClient client, ByteBuf msg);
 
     /**
      * Called when no message or keepalive has been received from the remote service for longer
