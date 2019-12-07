@@ -34,7 +34,7 @@ applicationDefaultJvmArgs = [
         '--add-opens=java.base/jdk.internal.misc=ALL-UNNAMED',
         '-Dio.netty.tryReflectionSetAccessible=true'
 ]
-mainClassName = 'com.reactivemarkets.toolbox.bsp.example.BspPing'
+mainClassName = 'com.reactivemarkets.toolbox.example.BspPing'
 sourceCompatibility = 1.9
 targetCompatibility = 1.9
 

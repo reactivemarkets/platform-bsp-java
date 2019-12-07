@@ -17,6 +17,7 @@
 package com.reactivemarkets.toolbox.bsp;
 
 import io.netty.bootstrap.Bootstrap;
+import io.netty.buffer.ByteBuf;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelHandler;
@@ -44,13 +45,13 @@ import java.util.concurrent.atomic.AtomicBoolean;
 
 import static com.reactivemarkets.toolbox.bsp.BspFactory.newBspDecoder;
 import static com.reactivemarkets.toolbox.bsp.BspFactory.newBspEncoder;
-import static com.reactivemarkets.toolbox.fbs.FbsFactory.newFbsDecoder;
-import static com.reactivemarkets.toolbox.fbs.FbsFactory.newFbsEncoder;
 
 public interface BspClient {
 
     /**
      * Execute an asynchronous close or shutdown.
+     *
+     * @return a future for the asynchronous close operation.
      */
     Future<Void> close();
 
@@ -70,6 +71,9 @@ public interface BspClient {
     /**
      * Schedule an asynchronous reconnect. This operation will have no effect if a connection
      * attempt is already in progress.
+     *
+     * @param delay the delay before reconnecting.
+     * @param unit the time unit for the delay.
      */
     void reconnect(long delay, TimeUnit unit);
 
@@ -78,17 +82,19 @@ public interface BspClient {
      * automatically. The {@link #flush()} method must be called to flush all pending data to the
      * underlying channel.
      *
+     * @param msg the message to be written to the output buffer.
      * @throws ClosedChannelException if the channel is closed or otherwise unavailable.
      */
-    void write(String msg) throws ClosedChannelException;
+    void write(ByteBuf msg) throws ClosedChannelException;
 
     /**
      * Write the message to the output buffer and then immediately flush all pending data to the
      * underlying channel.
      *
+     * @param msg the message to be written to the output buffer.
      * @throws ClosedChannelException if the channel is closed or otherwise unavailable.
      */
-    void writeAndFlush(String msg) throws ClosedChannelException;
+    void writeAndFlush(ByteBuf msg) throws ClosedChannelException;
 }
 
 @ChannelHandler.Sharable
@@ -151,13 +157,13 @@ final class BspClientImpl extends ChannelInboundHandlerAdapter implements BspCli
     }
 
     @Override
-    public void write(final String msg) throws ClosedChannelException {
+    public void write(final ByteBuf msg) throws ClosedChannelException {
         final Channel chan = channel();
         chan.write(msg, chan.voidPromise());
     }
 
     @Override
-    public void writeAndFlush(final String msg) throws ClosedChannelException {
+    public void writeAndFlush(final ByteBuf msg) throws ClosedChannelException {
         final Channel chan = channel();
         chan.writeAndFlush(msg, chan.voidPromise());
     }
@@ -190,14 +196,14 @@ final class BspClientImpl extends ChannelInboundHandlerAdapter implements BspCli
     }
 
     @Override
-    public void channelRead(final ChannelHandlerContext ctx, final Object msg) {
+    public void channelRead(final ChannelHandlerContext ctx, final Object obj) {
         // Event loop thread.
-        final String s = (String) msg;
-        if (s.isEmpty()) {
+        final ByteBuf msg = (ByteBuf) obj;
+        if (msg.readableBytes() == 0) {
             // Ignore keep-alives.
             return;
         }
-        handler.onBspMessage(this, (String) msg);
+        handler.onBspMessage(this, msg);
     }
 
     @Override
@@ -235,8 +241,6 @@ final class BspClientImpl extends ChannelInboundHandlerAdapter implements BspCli
                         TimeUnit.SECONDS));
                 p.addLast("bspDecoder", newBspDecoder());
                 p.addLast("bspEncoder", newBspEncoder());
-                p.addLast("fbsDecoder", newFbsDecoder());
-                p.addLast("fbsEncoder", newFbsEncoder());
                 p.addLast("handler", handler);
             }
         });

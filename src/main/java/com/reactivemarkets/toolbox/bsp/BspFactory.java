@@ -16,14 +16,17 @@
 
 package com.reactivemarkets.toolbox.bsp;
 
+import io.netty.buffer.ByteBuf;
+import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandler;
 import io.netty.channel.ChannelOutboundHandler;
 import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
-import io.netty.handler.codec.LengthFieldPrepender;
+import io.netty.handler.codec.MessageToMessageEncoder;
 
 import java.nio.ByteOrder;
+import java.util.List;
 
 import static com.reactivemarkets.toolbox.bsp.BspConstants.INITIAL_BYTES_TO_STRIP;
 import static com.reactivemarkets.toolbox.bsp.BspConstants.LENGTH_ADJUSTMENT;
@@ -52,6 +55,13 @@ public final class BspFactory {
     }
 
     public static ChannelOutboundHandler newBspEncoder() {
-        return new LengthFieldPrepender(ByteOrder.LITTLE_ENDIAN, LENGTH_FIELD_LENGTH, 0, false);
+        return new MessageToMessageEncoder<ByteBuf>() {
+            @Override
+            protected void encode(final ChannelHandlerContext ctx, final ByteBuf msg, final List<Object> out) {
+                final int length = msg.readableBytes();
+                out.add(ctx.alloc().buffer(4).writeIntLE(length));
+                out.add(msg.retain());
+            }
+        };
     }
 }
