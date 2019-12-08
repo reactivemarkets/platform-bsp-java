@@ -25,10 +25,10 @@ import com.reactivemarkets.toolbox.bsp.BspClient;
 import com.reactivemarkets.toolbox.bsp.BspConfig;
 import com.reactivemarkets.toolbox.bsp.BspHandler;
 import com.reactivemarkets.toolbox.time.HighResolutionClock;
+import com.reactivemarkets.toolbox.util.LoggerUtil;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import io.netty.channel.EventLoopGroup;
-import org.apache.log4j.BasicConfigurator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -70,14 +70,17 @@ public final class BspPing implements BspHandler {
     @Override
     public void onBspMessage(final BspClient client, final ByteBuf msg) {
         LOGGER.info("onBspMessage: " + msg.readableBytes());
+        try {
+            final ByteBuffer bb = msg.nioBuffer();
+            final Message root = Message.getRootAsMessage(bb);
+            final long timestamp = root.tts();
+            final byte type = root.bodyType();
 
-        final ByteBuffer bb = msg.nioBuffer();
-        final Message root = Message.getRootAsMessage(bb);
-        final long timestamp = root.tts();
-        final byte type = root.bodyType();
-
-        LOGGER.info("timestamp: " + timestamp);
-        LOGGER.info("type: " + (int) type);
+            LOGGER.info("timestamp: " + timestamp);
+            LOGGER.info("type: " + (int) type);
+        } finally {
+            msg.release();
+        }
     }
 
     @Override
@@ -88,7 +91,7 @@ public final class BspPing implements BspHandler {
 
     public static void main(final String[] args) throws Exception {
 
-        BasicConfigurator.configure();
+        LoggerUtil.consoleLogger();
         final EventLoopGroup group = newBspEventLoopGroup();
         try {
             final BspConfig config = new BspConfig(HOST, PORT, HB_INT);
