@@ -23,6 +23,7 @@ plugins {
     id 'io.netifi.flatbuffers' version '1.0.5'
     id 'java'
     id 'maven-publish'
+    id 'com.diffplug.gradle.spotless' version '3.26.1'
 }
 
 defaultTasks 'build'
@@ -125,5 +126,27 @@ publishing {
                 password = "${github_token}"
             }
         }
+    }
+}
+
+spotless {
+    format 'misc', {
+        target '**/*.gradle', '**/*.md'
+
+        endWithNewline()
+        indentWithSpaces()
+        trimTrailingWhitespace()
+  }
+    java {
+        target project.fileTree('src') {
+            include '**/*.java'
+            exclude '**/encoding/fbs/*.java', '**/HighResolutionClock.java'
+        }
+        endWithNewline()
+        indentWithSpaces()
+        trimTrailingWhitespace()
+
+        licenseHeaderFile 'spotless.license.java'
+        removeUnusedImports()
     }
 }

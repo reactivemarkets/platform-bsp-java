@@ -57,6 +57,15 @@ We actively welcome your pull requests.
 6. update the documentation for API changes;
 7. run checkstyle and format your changes.
 
+## Coding Style
+
+The build will apply checkstyle and spotless checks.
+Spotless rule violations can be corrected automatically as follows:
+
+```bash
+./gradlew spotlessApply
+```
+
 ### Assertions
 
 Use `assert` statements to formalise contract and document assumptions.

@@ -43,7 +43,6 @@ gradle-app.setting
 
 # Editors and IDEs.
 *~
-.editorconfig
 .gradle
 .vscode
 
