@@ -39,7 +39,8 @@ public interface BspHandler {
     void onBspError(BspClient client, Throwable cause);
 
     /**
-     * Called when a message is received from the remote service.
+     * Called when a message is received from the remote service. The implementation is
+     * responsible for calling {@link io.netty.util.ReferenceCounted#release()} on the message.
      *
      * @param client The client.
      * @param msg The message.

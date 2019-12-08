@@ -18,6 +18,7 @@ package com.reactivemarkets.toolbox.bsp;
 
 import io.netty.bootstrap.Bootstrap;
 import io.netty.buffer.ByteBuf;
+import io.netty.buffer.EmptyByteBuf;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelHandler;
@@ -63,8 +64,8 @@ public interface BspClient {
     void flush() throws ClosedChannelException;
 
     /**
-     * Execute an asynchronous reconnect. This operation will have no effect if a connection
-     * attempt is already in progress.
+     * Execute an asynchronous reconnect. This operation will have no effect if a connection attempt
+     * is already in progress.
      */
     void reconnect();
 
@@ -121,7 +122,8 @@ final class BspClientImpl extends ChannelInboundHandlerAdapter implements BspCli
             // Single writer: event loop thread.
             closed = true;
             if (channel != null) {
-                // N.B. future completion will happen when the channel becomes inactive.
+                // The channel member is only set while the channel is active, so future completion
+                // can be deferred until the #channelInactive() method is called.
                 channel.close();
             } else {
                 // Cancel the connect future if still pending.
@@ -176,6 +178,7 @@ final class BspClientImpl extends ChannelInboundHandlerAdapter implements BspCli
             ctx.close();
             return;
         }
+        assert channel == null;
         channel = ctx.channel();
         handler.onBspConnnect(this);
     }
@@ -184,8 +187,9 @@ final class BspClientImpl extends ChannelInboundHandlerAdapter implements BspCli
     public void channelInactive(final ChannelHandlerContext ctx) {
         // Event loop thread.
 
-        // The channel will be null if the channelActive method was called when the client was
-        // already closed. In which case, onConnnect() and onDisconnect() should not be called.
+        // The channel will be null if the #channelActive() method was called when the client was
+        // already closed. In which case, #onDisconnect() should not be called, because
+        // #onConnnect() was also not called.
         if (channel != null) {
             channel = null;
             handler.onBspDisconnect(this);
@@ -201,6 +205,7 @@ final class BspClientImpl extends ChannelInboundHandlerAdapter implements BspCli
         final ByteBuf msg = (ByteBuf) obj;
         if (msg.readableBytes() == 0) {
             // Ignore keep-alives.
+            msg.release();
             return;
         }
         handler.onBspMessage(this, msg);
@@ -287,6 +292,7 @@ final class BspClientImpl extends ChannelInboundHandlerAdapter implements BspCli
     }
 
     private void connect() {
+        assert connectPending.get();
         connectFuture = bootstrap.connect(config.host, config.port);
         connectFuture.addListener(future -> {
             // Reset pending flag when the operation completes.
@@ -305,7 +311,8 @@ final class BspClientImpl extends ChannelInboundHandlerAdapter implements BspCli
 
     private void writerIdle(final ChannelHandlerContext ctx) {
         // Send keepalive.
-        ctx.writeAndFlush("");
+        final ByteBuf msg = new EmptyByteBuf(ctx.alloc());
+        ctx.writeAndFlush(msg);
     }
 
     private final EventLoopGroup group;
