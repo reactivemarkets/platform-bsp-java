@@ -17,6 +17,8 @@
 package com.reactivemarkets.toolbox.bsp;
 
 import io.netty.buffer.ByteBuf;
+import io.netty.buffer.ByteBufAllocator;
+import io.netty.buffer.PooledByteBufAllocator;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandler;
 import io.netty.channel.ChannelOutboundHandler;
@@ -25,6 +27,7 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.handler.codec.LengthFieldBasedFrameDecoder;
 import io.netty.handler.codec.MessageToMessageEncoder;
 
+import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.util.List;
 
@@ -33,6 +36,7 @@ import static com.reactivemarkets.toolbox.bsp.BspConstants.LENGTH_ADJUSTMENT;
 import static com.reactivemarkets.toolbox.bsp.BspConstants.LENGTH_FIELD_LENGTH;
 import static com.reactivemarkets.toolbox.bsp.BspConstants.LENGTH_FIELD_OFFSET;
 import static com.reactivemarkets.toolbox.bsp.BspConstants.MAX_FRAME_LENGTH;
+import static com.reactivemarkets.toolbox.bsp.BspConstants.MAX_MESSAGE_SIZE;
 
 public final class BspFactory {
     private BspFactory() {
@@ -50,8 +54,8 @@ public final class BspFactory {
 
     public static ChannelInboundHandler newBspDecoder() {
         return new LengthFieldBasedFrameDecoder(ByteOrder.LITTLE_ENDIAN, MAX_FRAME_LENGTH,
-                LENGTH_FIELD_OFFSET, LENGTH_FIELD_LENGTH, LENGTH_ADJUSTMENT,
-                INITIAL_BYTES_TO_STRIP, true);
+            LENGTH_FIELD_OFFSET, LENGTH_FIELD_LENGTH, LENGTH_ADJUSTMENT,
+            INITIAL_BYTES_TO_STRIP, true);
     }
 
     public static ChannelOutboundHandler newBspEncoder() {
@@ -63,5 +67,24 @@ public final class BspFactory {
                 out.add(msg.retain());
             }
         };
+    }
+
+    public static ByteBuf newBspMessage() {
+        final ByteBufAllocator alloc = PooledByteBufAllocator.DEFAULT;
+        return alloc.buffer(MAX_MESSAGE_SIZE, MAX_MESSAGE_SIZE);
+    }
+
+    public static ByteBuf newBspMessage(final ByteBuffer bb) {
+        boolean done = false;
+        final ByteBuf msg = BspFactory.newBspMessage();
+        try {
+            msg.writeBytes(bb);
+            done = true;
+        } finally {
+            if (!done) {
+                msg.release();
+            }
+        }
+        return msg;
     }
 }

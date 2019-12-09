@@ -22,8 +22,10 @@ import org.apache.log4j.Logger;
 
 public final class LoggerUtil {
     private static final String PATTERN = "[%d{ISO8601}{UTC}] %-5p [%t] %C{1} - %m%n";
+
     private LoggerUtil() {
     }
+
     public static void consoleLogger() {
         final Logger root = Logger.getRootLogger();
         root.addAppender(new ConsoleAppender(new EnhancedPatternLayout(PATTERN)));
