@@ -164,7 +164,7 @@ final class BspClientImpl extends ChannelInboundHandlerAdapter implements BspCli
     @Override
     public void reconnect() {
         // Execute on the event loop thread.
-        if (!connectPending.compareAndExchange(false, true)) {
+        if (connectPending.compareAndSet(false, true)) {
             group.execute(reconnectCommand);
         }
     }
@@ -172,7 +172,7 @@ final class BspClientImpl extends ChannelInboundHandlerAdapter implements BspCli
     @Override
     public void reconnect(final long delay, final TimeUnit unit) {
         // Execute on the event loop thread.
-        if (!connectPending.compareAndExchange(false, true)) {
+        if (connectPending.compareAndSet(false, true)) {
             group.schedule(reconnectCommand, delay, unit);
         }
     }

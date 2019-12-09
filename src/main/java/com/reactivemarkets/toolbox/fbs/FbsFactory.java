@@ -34,16 +34,16 @@ public final class FbsFactory {
     private FbsFactory() {
     }
 
-    public static FlatBufferBuilder getBuilder() {
+    public static FlatBufferBuilder getFbsBuilder() {
         final FlatBufferBuilder builder = BUILDER.get();
         builder.clear();
         return builder;
     }
 
-    public static ByteBuf newAsset(final int id, final String symbol, final String display,
-                                   final int assetType) {
+    public static ByteBuf newFbsAsset(final int id, final String symbol, final String display,
+                                      final int assetType) {
 
-        final FlatBufferBuilder builder = getBuilder();
+        final FlatBufferBuilder builder = getFbsBuilder();
 
         final int symbolOffset = builder.createString(symbol);
         final int displayOffset = builder.createString(display);
