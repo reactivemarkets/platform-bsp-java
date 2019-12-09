@@ -44,9 +44,6 @@ import java.util.concurrent.Future;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicBoolean;
 
-import static com.reactivemarkets.toolbox.bsp.BspFactory.newBspDecoder;
-import static com.reactivemarkets.toolbox.bsp.BspFactory.newBspEncoder;
-
 public interface BspClient {
 
     /**
@@ -74,7 +71,7 @@ public interface BspClient {
      * attempt is already in progress.
      *
      * @param delay the delay before reconnecting.
-     * @param unit the time unit for the delay.
+     * @param unit  the time unit for the delay.
      */
     void reconnect(long delay, TimeUnit unit);
 
@@ -108,6 +105,28 @@ final class BspClientImpl extends ChannelInboundHandlerAdapter implements BspCli
         bootstrap = newClientBootstrap(group, this, config);
         reconnectCommand = newReconnectCommand();
         connect();
+    }
+
+    private static Bootstrap newClientBootstrap(final EventLoopGroup group,
+                                                final ChannelInboundHandler handler,
+                                                final BspConfig config) {
+        final Bootstrap bs = new Bootstrap();
+        bs.group(group);
+        bs.channel(NioSocketChannel.class);
+        bs.option(ChannelOption.TCP_NODELAY, true);
+        bs.handler(new LoggingHandler(LogLevel.INFO));
+        bs.handler(new ChannelInitializer<SocketChannel>() {
+            @Override
+            public void initChannel(final SocketChannel sc) throws Exception {
+                final ChannelPipeline p = sc.pipeline();
+                p.addLast("keepalive", new IdleStateHandler(config.hbInt + 1, config.hbInt, 0,
+                    TimeUnit.SECONDS));
+                p.addLast("bspDecoder", BspFactory.newBspDecoder());
+                p.addLast("bspEncoder", BspFactory.newBspEncoder());
+                p.addLast("handler", handler);
+            }
+        });
+        return bs;
     }
 
     @Override
@@ -228,28 +247,6 @@ final class BspClientImpl extends ChannelInboundHandlerAdapter implements BspCli
                 writerIdle(ctx);
             }
         }
-    }
-
-    private static Bootstrap newClientBootstrap(final EventLoopGroup group,
-                                                final ChannelInboundHandler handler,
-                                                final BspConfig config) {
-        final Bootstrap bs = new Bootstrap();
-        bs.group(group);
-        bs.channel(NioSocketChannel.class);
-        bs.option(ChannelOption.TCP_NODELAY, true);
-        bs.handler(new LoggingHandler(LogLevel.INFO));
-        bs.handler(new ChannelInitializer<SocketChannel>() {
-            @Override
-            public void initChannel(final SocketChannel sc) throws Exception {
-                final ChannelPipeline p = sc.pipeline();
-                p.addLast("keepalive", new IdleStateHandler(config.hbInt + 1, config.hbInt, 0,
-                        TimeUnit.SECONDS));
-                p.addLast("bspDecoder", newBspDecoder());
-                p.addLast("bspEncoder", newBspEncoder());
-                p.addLast("handler", handler);
-            }
-        });
-        return bs;
     }
 
     private Runnable newReconnectCommand() {

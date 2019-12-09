@@ -21,20 +21,23 @@ import io.netty.buffer.ByteBuf;
 public interface BspHandler {
     /**
      * Called when a connection to the remote service is established.
+     *
      * @param client The client.
      */
     void onBspConnnect(BspClient client);
 
     /**
      * Called when a connection to the remote service is lost.
+     *
      * @param client The client.
      */
     void onBspDisconnect(BspClient client);
 
     /**
      * Called when an error occurs on the asynchronous part of an operation.
+     *
      * @param client The client.
-     * @param cause The cause.
+     * @param cause  The cause.
      */
     void onBspError(BspClient client, Throwable cause);
 
@@ -43,7 +46,7 @@ public interface BspHandler {
      * responsible for calling {@link io.netty.util.ReferenceCounted#release()} on the message.
      *
      * @param client The client.
-     * @param msg The message.
+     * @param msg    The message.
      */
     void onBspMessage(BspClient client, ByteBuf msg);
 
