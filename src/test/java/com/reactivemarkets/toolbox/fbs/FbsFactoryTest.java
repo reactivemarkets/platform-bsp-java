@@ -27,12 +27,12 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 public final class FbsFactoryTest {
-    private static ByteBuf newAsset() {
-        return FbsFactory.newAsset(1, "EUR", "Euro Member Countries, Euro",  AssetType.Ccy);
+    private static ByteBuf newFbsAsset() {
+        return FbsFactory.newFbsAsset(1, "EUR", "Euro Member Countries, Euro",  AssetType.Ccy);
     }
     @Test
     public void testAsset() {
-        final ByteBuf msg = newAsset();
+        final ByteBuf msg = newFbsAsset();
         try {
             assertEquals(1, msg.refCnt());
             assertTrue(msg.readableBytes() > 0);

@@ -56,7 +56,7 @@ public final class BspPing implements BspHandler {
                     LOGGER.info("sending message batch");
                     try {
                         for (int j = 0; j < 5; ++j) {
-                            client.write(newAsset());
+                            client.write(newFbsAsset());
                             ++count;
                         }
                         client.flush();
@@ -73,8 +73,8 @@ public final class BspPing implements BspHandler {
         }
     }
 
-    private static ByteBuf newAsset() {
-        return FbsFactory.newAsset(1, "EUR", "Euro Member Countries, Euro", AssetType.Ccy);
+    private static ByteBuf newFbsAsset() {
+        return FbsFactory.newFbsAsset(1, "EUR", "Euro Member Countries, Euro", AssetType.Ccy);
     }
 
     @Override
