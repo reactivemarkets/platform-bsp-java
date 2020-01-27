@@ -14,3 +14,19 @@
  * limitations under the License.
  */
 
+package com.reactivemarkets.toolbox.fix.field;
+
+import com.reactivemarkets.toolbox.quickfix.LongField;
+
+public final class CostField extends LongField {
+    public static final int FIELD = 20001;
+    private static final long serialVersionUID = 1L;
+
+    public CostField() {
+        super(FIELD);
+    }
+
+    public CostField(final Long data) {
+        super(FIELD, data);
+    }
+}

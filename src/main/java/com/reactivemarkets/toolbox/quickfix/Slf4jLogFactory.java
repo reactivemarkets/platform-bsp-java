@@ -14,3 +14,15 @@
  * limitations under the License.
  */
 
+package com.reactivemarkets.toolbox.quickfix;
+
+import quickfix.Log;
+import quickfix.LogFactory;
+import quickfix.SessionID;
+
+public final class Slf4jLogFactory implements LogFactory {
+    @Override
+    public Log create(final SessionID sessionId) {
+        return new Slf4jLog(sessionId);
+    }
+}
