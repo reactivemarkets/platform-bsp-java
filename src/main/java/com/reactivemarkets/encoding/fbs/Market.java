@@ -21,8 +21,8 @@ public final class Market extends Table {
 
     public static int createMarket(FlatBufferBuilder builder,
                                    int symbolOffset,
-                                   int venueOffset,
                                    int instrOffset,
+                                   int venueOffset,
                                    short pool,
                                    int expiry_date,
                                    long default_lots,
@@ -38,8 +38,8 @@ public final class Market extends Table {
         Market.addLotDenom(builder, lot_denom);
         Market.addLotNumer(builder, lot_numer);
         Market.addExpiryDate(builder, expiry_date);
-        Market.addInstr(builder, instrOffset);
         Market.addVenue(builder, venueOffset);
+        Market.addInstr(builder, instrOffset);
         Market.addSymbol(builder, symbolOffset);
         Market.addPriceDp(builder, price_dp);
         Market.addPool(builder, pool);
@@ -54,12 +54,12 @@ public final class Market extends Table {
         builder.addOffset(0, symbolOffset, 0);
     }
 
-    public static void addVenue(FlatBufferBuilder builder, int venueOffset) {
-        builder.addOffset(1, venueOffset, 0);
+    public static void addInstr(FlatBufferBuilder builder, int instrOffset) {
+        builder.addOffset(1, instrOffset, 0);
     }
 
-    public static void addInstr(FlatBufferBuilder builder, int instrOffset) {
-        builder.addOffset(2, instrOffset, 0);
+    public static void addVenue(FlatBufferBuilder builder, int venueOffset) {
+        builder.addOffset(2, venueOffset, 0);
     }
 
     public static void addPool(FlatBufferBuilder builder, short pool) {
@@ -97,6 +97,7 @@ public final class Market extends Table {
     public static int endMarket(FlatBufferBuilder builder) {
         int o = builder.endObject();
         builder.required(o, 4);  // symbol
+        builder.required(o, 6);  // instr
         return o;
     }
 
@@ -125,29 +126,29 @@ public final class Market extends Table {
         return __vector_in_bytebuffer(_bb, 4, 1);
     }
 
-    public String venue() {
+    public String instr() {
         int o = __offset(6);
         return o != 0 ? __string(o + bb_pos) : null;
     }
 
-    public ByteBuffer venueAsByteBuffer() {
+    public ByteBuffer instrAsByteBuffer() {
         return __vector_as_bytebuffer(6, 1);
     }
 
-    public ByteBuffer venueInByteBuffer(ByteBuffer _bb) {
+    public ByteBuffer instrInByteBuffer(ByteBuffer _bb) {
         return __vector_in_bytebuffer(_bb, 6, 1);
     }
 
-    public String instr() {
+    public String venue() {
         int o = __offset(8);
         return o != 0 ? __string(o + bb_pos) : null;
     }
 
-    public ByteBuffer instrAsByteBuffer() {
+    public ByteBuffer venueAsByteBuffer() {
         return __vector_as_bytebuffer(8, 1);
     }
 
-    public ByteBuffer instrInByteBuffer(ByteBuffer _bb) {
+    public ByteBuffer venueInByteBuffer(ByteBuffer _bb) {
         return __vector_in_bytebuffer(_bb, 8, 1);
     }
 

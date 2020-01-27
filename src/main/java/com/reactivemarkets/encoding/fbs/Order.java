@@ -20,6 +20,7 @@ public final class Order extends Table {
     }
 
     public static int createOrder(FlatBufferBuilder builder,
+                                  long created_ts,
                                   long trans_ts,
                                   int userOffset,
                                   int accntOffset,
@@ -39,7 +40,7 @@ public final class Order extends Table {
                                   double cum_cost,
                                   double last_qty,
                                   double last_price) {
-        builder.startObject(19);
+        builder.startObject(20);
         Order.addLastPrice(builder, last_price);
         Order.addLastQty(builder, last_qty);
         Order.addCumCost(builder, cum_cost);
@@ -49,6 +50,7 @@ public final class Order extends Table {
         Order.addPrice(builder, price);
         Order.addQty(builder, qty);
         Order.addTransTs(builder, trans_ts);
+        Order.addCreatedTs(builder, created_ts);
         Order.addStratType(builder, strat_typeOffset);
         Order.addClOrderId(builder, cl_order_idOffset);
         Order.addOrderId(builder, order_idOffset);
@@ -63,90 +65,94 @@ public final class Order extends Table {
     }
 
     public static void startOrder(FlatBufferBuilder builder) {
-        builder.startObject(19);
+        builder.startObject(20);
+    }
+
+    public static void addCreatedTs(FlatBufferBuilder builder, long createdTs) {
+        builder.addLong(0, createdTs, 0L);
     }
 
     public static void addTransTs(FlatBufferBuilder builder, long transTs) {
-        builder.addLong(0, transTs, 0L);
+        builder.addLong(1, transTs, 0L);
     }
 
     public static void addUser(FlatBufferBuilder builder, int userOffset) {
-        builder.addOffset(1, userOffset, 0);
+        builder.addOffset(2, userOffset, 0);
     }
 
     public static void addAccnt(FlatBufferBuilder builder, int accntOffset) {
-        builder.addOffset(2, accntOffset, 0);
+        builder.addOffset(3, accntOffset, 0);
     }
 
     public static void addMarket(FlatBufferBuilder builder, int marketOffset) {
-        builder.addOffset(3, marketOffset, 0);
+        builder.addOffset(4, marketOffset, 0);
     }
 
     public static void addOrderId(FlatBufferBuilder builder, int orderIdOffset) {
-        builder.addOffset(4, orderIdOffset, 0);
+        builder.addOffset(5, orderIdOffset, 0);
     }
 
     public static void addClOrderId(FlatBufferBuilder builder, int clOrderIdOffset) {
-        builder.addOffset(5, clOrderIdOffset, 0);
+        builder.addOffset(6, clOrderIdOffset, 0);
     }
 
     public static void addStratType(FlatBufferBuilder builder, int stratTypeOffset) {
-        builder.addOffset(6, stratTypeOffset, 0);
+        builder.addOffset(7, stratTypeOffset, 0);
     }
 
     public static void addSide(FlatBufferBuilder builder, short side) {
-        builder.addShort(7, side, 0);
+        builder.addShort(8, side, 0);
     }
 
     public static void addOrderType(FlatBufferBuilder builder, short orderType) {
-        builder.addShort(8, orderType, 1);
+        builder.addShort(9, orderType, 1);
     }
 
     public static void addTimeType(FlatBufferBuilder builder, short timeType) {
-        builder.addShort(9, timeType, 0);
+        builder.addShort(10, timeType, 0);
     }
 
     public static void addExecType(FlatBufferBuilder builder, short execType) {
-        builder.addShort(10, execType, 0);
+        builder.addShort(11, execType, 0);
     }
 
     public static void addQty(FlatBufferBuilder builder, double qty) {
-        builder.addDouble(11, qty, 0.0);
+        builder.addDouble(12, qty, 0.0);
     }
 
     public static void addPrice(FlatBufferBuilder builder, double price) {
-        builder.addDouble(12, price, 0.0);
+        builder.addDouble(13, price, 0.0);
     }
 
     public static void addMinQty(FlatBufferBuilder builder, double minQty) {
-        builder.addDouble(13, minQty, 1.0);
+        builder.addDouble(14, minQty, 1.0);
     }
 
     public static void addResdQty(FlatBufferBuilder builder, double resdQty) {
-        builder.addDouble(14, resdQty, 0.0);
+        builder.addDouble(15, resdQty, 0.0);
     }
 
     public static void addCumQty(FlatBufferBuilder builder, double cumQty) {
-        builder.addDouble(15, cumQty, 0.0);
+        builder.addDouble(16, cumQty, 0.0);
     }
 
     public static void addCumCost(FlatBufferBuilder builder, double cumCost) {
-        builder.addDouble(16, cumCost, 0.0);
+        builder.addDouble(17, cumCost, 0.0);
     }
 
     public static void addLastQty(FlatBufferBuilder builder, double lastQty) {
-        builder.addDouble(17, lastQty, 0.0);
+        builder.addDouble(18, lastQty, 0.0);
     }
 
     public static void addLastPrice(FlatBufferBuilder builder, double lastPrice) {
-        builder.addDouble(18, lastPrice, 0.0);
+        builder.addDouble(19, lastPrice, 0.0);
     }
 
     public static int endOrder(FlatBufferBuilder builder) {
         int o = builder.endObject();
-        builder.required(o, 8);  // accnt
-        builder.required(o, 10);  // market
-        builder.required(o, 12);  // order_id
+        builder.required(o, 10);  // accnt
+        builder.required(o, 12);  // market
+        builder.required(o, 14);  // order_id
         return o;
     }
 
@@ -162,146 +168,151 @@ public final class Order extends Table {
         return this;
     }
 
-    public long transTs() {
+    public long createdTs() {
         int o = __offset(4);
         return o != 0 ? bb.getLong(o + bb_pos) : 0L;
     }
 
-    public String user() {
+    public long transTs() {
         int o = __offset(6);
-        return o != 0 ? __string(o + bb_pos) : null;
+        return o != 0 ? bb.getLong(o + bb_pos) : 0L;
     }
 
-    public ByteBuffer userAsByteBuffer() {
-        return __vector_as_bytebuffer(6, 1);
-    }
-
-    public ByteBuffer userInByteBuffer(ByteBuffer _bb) {
-        return __vector_in_bytebuffer(_bb, 6, 1);
-    }
-
-    public String accnt() {
+    public String user() {
         int o = __offset(8);
         return o != 0 ? __string(o + bb_pos) : null;
     }
 
-    public ByteBuffer accntAsByteBuffer() {
+    public ByteBuffer userAsByteBuffer() {
         return __vector_as_bytebuffer(8, 1);
     }
 
-    public ByteBuffer accntInByteBuffer(ByteBuffer _bb) {
+    public ByteBuffer userInByteBuffer(ByteBuffer _bb) {
         return __vector_in_bytebuffer(_bb, 8, 1);
     }
 
-    public String market() {
+    public String accnt() {
         int o = __offset(10);
         return o != 0 ? __string(o + bb_pos) : null;
     }
 
-    public ByteBuffer marketAsByteBuffer() {
+    public ByteBuffer accntAsByteBuffer() {
         return __vector_as_bytebuffer(10, 1);
     }
 
-    public ByteBuffer marketInByteBuffer(ByteBuffer _bb) {
+    public ByteBuffer accntInByteBuffer(ByteBuffer _bb) {
         return __vector_in_bytebuffer(_bb, 10, 1);
     }
 
-    public String orderId() {
+    public String market() {
         int o = __offset(12);
         return o != 0 ? __string(o + bb_pos) : null;
     }
 
-    public ByteBuffer orderIdAsByteBuffer() {
+    public ByteBuffer marketAsByteBuffer() {
         return __vector_as_bytebuffer(12, 1);
     }
 
-    public ByteBuffer orderIdInByteBuffer(ByteBuffer _bb) {
+    public ByteBuffer marketInByteBuffer(ByteBuffer _bb) {
         return __vector_in_bytebuffer(_bb, 12, 1);
     }
 
-    public String clOrderId() {
+    public String orderId() {
         int o = __offset(14);
         return o != 0 ? __string(o + bb_pos) : null;
     }
 
-    public ByteBuffer clOrderIdAsByteBuffer() {
+    public ByteBuffer orderIdAsByteBuffer() {
         return __vector_as_bytebuffer(14, 1);
     }
 
-    public ByteBuffer clOrderIdInByteBuffer(ByteBuffer _bb) {
+    public ByteBuffer orderIdInByteBuffer(ByteBuffer _bb) {
         return __vector_in_bytebuffer(_bb, 14, 1);
     }
 
-    public String stratType() {
+    public String clOrderId() {
         int o = __offset(16);
         return o != 0 ? __string(o + bb_pos) : null;
     }
 
-    public ByteBuffer stratTypeAsByteBuffer() {
+    public ByteBuffer clOrderIdAsByteBuffer() {
         return __vector_as_bytebuffer(16, 1);
     }
 
-    public ByteBuffer stratTypeInByteBuffer(ByteBuffer _bb) {
+    public ByteBuffer clOrderIdInByteBuffer(ByteBuffer _bb) {
         return __vector_in_bytebuffer(_bb, 16, 1);
     }
 
-    public short side() {
+    public String stratType() {
         int o = __offset(18);
+        return o != 0 ? __string(o + bb_pos) : null;
+    }
+
+    public ByteBuffer stratTypeAsByteBuffer() {
+        return __vector_as_bytebuffer(18, 1);
+    }
+
+    public ByteBuffer stratTypeInByteBuffer(ByteBuffer _bb) {
+        return __vector_in_bytebuffer(_bb, 18, 1);
+    }
+
+    public short side() {
+        int o = __offset(20);
         return o != 0 ? bb.getShort(o + bb_pos) : 0;
     }
 
     public short orderType() {
-        int o = __offset(20);
+        int o = __offset(22);
         return o != 0 ? bb.getShort(o + bb_pos) : 1;
     }
 
     public short timeType() {
-        int o = __offset(22);
-        return o != 0 ? bb.getShort(o + bb_pos) : 0;
-    }
-
-    public short execType() {
         int o = __offset(24);
         return o != 0 ? bb.getShort(o + bb_pos) : 0;
     }
 
-    public double qty() {
+    public short execType() {
         int o = __offset(26);
-        return o != 0 ? bb.getDouble(o + bb_pos) : 0.0;
+        return o != 0 ? bb.getShort(o + bb_pos) : 0;
     }
 
-    public double price() {
+    public double qty() {
         int o = __offset(28);
         return o != 0 ? bb.getDouble(o + bb_pos) : 0.0;
     }
 
-    public double minQty() {
+    public double price() {
         int o = __offset(30);
+        return o != 0 ? bb.getDouble(o + bb_pos) : 0.0;
+    }
+
+    public double minQty() {
+        int o = __offset(32);
         return o != 0 ? bb.getDouble(o + bb_pos) : 1.0;
     }
 
     public double resdQty() {
-        int o = __offset(32);
-        return o != 0 ? bb.getDouble(o + bb_pos) : 0.0;
-    }
-
-    public double cumQty() {
         int o = __offset(34);
         return o != 0 ? bb.getDouble(o + bb_pos) : 0.0;
     }
 
-    public double cumCost() {
+    public double cumQty() {
         int o = __offset(36);
         return o != 0 ? bb.getDouble(o + bb_pos) : 0.0;
     }
 
-    public double lastQty() {
+    public double cumCost() {
         int o = __offset(38);
         return o != 0 ? bb.getDouble(o + bb_pos) : 0.0;
     }
 
-    public double lastPrice() {
+    public double lastQty() {
         int o = __offset(40);
+        return o != 0 ? bb.getDouble(o + bb_pos) : 0.0;
+    }
+
+    public double lastPrice() {
+        int o = __offset(42);
         return o != 0 ? bb.getDouble(o + bb_pos) : 0.0;
     }
 }

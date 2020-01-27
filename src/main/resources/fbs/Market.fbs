@@ -8,10 +8,10 @@ namespace com.reactivemarkets.encoding.fbs;
 table Market {
     // Machine-readable identifier.
     symbol: string (required);
+    // The underlying instrument.
+    instr: string (required);
     // The next hop routing venue.
     venue: string;
-    // The underlying instrument.
-    instr: string;
     // The liquidity pool or price tier.
     pool: int16 = 0;
     // The last day of trading.
