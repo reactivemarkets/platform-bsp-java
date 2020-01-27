@@ -14,3 +14,17 @@
  * limitations under the License.
  */
 
+package com.reactivemarkets.toolbox.quickfix;
+
+import quickfix.Log;
+import quickfix.LogFactory;
+import quickfix.SessionID;
+
+public final class NullLogFactory implements LogFactory {
+    private static final Log LOGGER = new NullLog();
+
+    @Override
+    public Log create(final SessionID sessionId) {
+        return LOGGER;
+    }
+}

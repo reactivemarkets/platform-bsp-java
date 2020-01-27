@@ -28,13 +28,17 @@ plugins {
 
 defaultTasks 'build'
 group 'com.reactivemarkets'
-version '0.1-SNAPSHOT'
+version '0.2-SNAPSHOT'
 
+// The following JVM may be required to enable unsafe access in Java 11 and above.
+/*
 applicationDefaultJvmArgs = [
-        '--add-opens=java.base/jdk.internal.misc=ALL-UNNAMED',
+        '--add-exports=java.base/jdk.internal.misc=ALL-UNNAMED',
         '-Dio.netty.tryReflectionSetAccessible=true'
 ]
-mainClassName = 'com.reactivemarkets.toolbox.example.BspPing'
+*/
+
+mainClassName = 'com.reactivemarkets.toolbox.example.FixBot'
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
@@ -47,6 +51,8 @@ dependencies {
     compile group: 'io.netty', name: 'netty-handler', version: '4.1.43.Final'
     compile group: 'log4j', name: 'apache-log4j-extras', version: '1.2.+'
     compile group: 'org.agrona', name: 'agrona', version: '0.9.+'
+    compile group: 'org.quickfixj', name: 'quickfixj-core', version: '2.1.+'
+    compile group: 'org.quickfixj', name: 'quickfixj-messages-fix44', version: '2.1.+'
     compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.+'
     compile group: 'org.slf4j', name: 'slf4j-log4j12', version: '1.7.+'
     testCompile group: 'junit', name: 'junit', version: '4.+'

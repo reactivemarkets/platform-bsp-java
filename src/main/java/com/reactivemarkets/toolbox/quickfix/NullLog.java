@@ -14,26 +14,29 @@
  * limitations under the License.
  */
 
-package com.reactivemarkets.toolbox.util;
+package com.reactivemarkets.toolbox.quickfix;
 
-import org.apache.log4j.ConsoleAppender;
-import org.apache.log4j.EnhancedPatternLayout;
-import org.apache.log4j.Level;
-import org.apache.log4j.Logger;
+import quickfix.Log;
 
-public final class LoggerUtil {
-    private static final String PATTERN = "[%d{ISO8601}{UTC}] %-5p [%t] %C{1} - %m%n";
+final class NullLog implements Log {
 
-    private LoggerUtil() {
+    @Override
+    public void clear() {
     }
 
-    public static void consoleLogger(final Level level) {
-        final Logger root = Logger.getRootLogger();
-        root.addAppender(new ConsoleAppender(new EnhancedPatternLayout(PATTERN)));
-        root.setLevel(level);
+    @Override
+    public void onIncoming(final String message) {
     }
 
-    public static void consoleLogger() {
-        consoleLogger(Level.INFO);
+    @Override
+    public void onOutgoing(final String message) {
+    }
+
+    @Override
+    public void onEvent(final String text) {
+    }
+
+    @Override
+    public void onErrorEvent(final String text) {
     }
 }
