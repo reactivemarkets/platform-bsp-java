@@ -6,6 +6,7 @@ include "Enum.fbs";
 namespace com.reactivemarkets.encoding.fbs;
 
 table Order {
+    created_ts: long;
     trans_ts: long;
     user: string;
     accnt: string (required);

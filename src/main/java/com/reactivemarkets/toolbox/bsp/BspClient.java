@@ -98,6 +98,22 @@ public interface BspClient {
 @ChannelHandler.Sharable
 final class BspClientImpl extends ChannelInboundHandlerAdapter implements BspClient {
 
+    private final EventLoopGroup group;
+    private final BspHandler handler;
+    private final BspConfig config;
+    private final Bootstrap bootstrap;
+    private final CompletableFuture<Void> closeFuture = new CompletableFuture<Void>();
+    private final Runnable reconnectCommand;
+    private final AtomicBoolean connectPending = new AtomicBoolean(true);
+    private ChannelFuture connectFuture;
+    private volatile Channel channel;
+    /**
+     * Set to true by the {@link #close()} method.
+     * Multiple readers.
+     * Single writer: event loop thread.
+     */
+    private volatile boolean closed = false;
+
     BspClientImpl(final EventLoopGroup group, final BspHandler handler, final BspConfig config) {
         this.group = group;
         this.handler = handler;
@@ -311,20 +327,4 @@ final class BspClientImpl extends ChannelInboundHandlerAdapter implements BspCli
         final ByteBuf msg = new EmptyByteBuf(ctx.alloc());
         ctx.writeAndFlush(msg);
     }
-
-    private final EventLoopGroup group;
-    private final BspHandler handler;
-    private final BspConfig config;
-    private final Bootstrap bootstrap;
-    private final CompletableFuture<Void> closeFuture = new CompletableFuture<Void>();
-    private final Runnable reconnectCommand;
-    private final AtomicBoolean connectPending = new AtomicBoolean(true);
-    private ChannelFuture connectFuture;
-    private volatile Channel channel;
-    /**
-     * Set to true by the {@link #close()} method.
-     * Multiple readers.
-     * Single writer: event loop thread.
-     */
-    private volatile boolean closed = false;
 }
