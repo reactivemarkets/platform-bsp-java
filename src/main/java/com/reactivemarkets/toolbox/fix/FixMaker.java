@@ -29,6 +29,7 @@ import quickfix.SessionID;
 import quickfix.UnsupportedMessageType;
 import quickfix.fix44.MarketDataRequest;
 import quickfix.fix44.MessageCracker;
+import quickfix.fix44.NewOrderSingle;
 
 public final class FixMaker extends MessageCracker implements Application {
 
@@ -181,5 +182,11 @@ public final class FixMaker extends MessageCracker implements Application {
     public void onMessage(final MarketDataRequest mdr, final SessionID sessionId)
         throws FieldNotFound, IncorrectTagValue {
         LOGGER.info(sessionId + ": MarketDataRequest: " + mdr);
+    }
+
+    @Override
+    public void onMessage(final NewOrderSingle nos, final SessionID sessionId)
+        throws FieldNotFound, IncorrectTagValue {
+        LOGGER.info(sessionId + ": NewOrderSingle: " + nos);
     }
 }
