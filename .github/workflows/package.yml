@@ -20,11 +20,13 @@ on:
       - v*
 
 jobs:
-  publish:
+  package:
+    runs-on: ${{ matrix.os }}
+
     strategy:
       matrix:
         os: [ubuntu-latest]
-    runs-on: ${{ matrix.os }}
+
     steps:
       - name: Checkout the code
         uses: actions/checkout@v1
@@ -38,4 +40,4 @@ jobs:
         env:
           GITHUB_USER: x-access-token
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: ./gradlew printInfo publish -Pversion="${GITHUB_REF:10}"
+        run: ./gradlew printInfo publish -Pversion="${GITHUB_REF:11}"

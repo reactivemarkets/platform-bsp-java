@@ -21,10 +21,12 @@ on:
 
 jobs:
   build:
+    runs-on: ${{ matrix.os }}
+
     strategy:
       matrix:
         os: [ubuntu-latest]
-    runs-on: ${{ matrix.os }}
+
     steps:
       - name: Checkout latest code
         uses: actions/checkout@v1
