@@ -41,7 +41,7 @@ public final class FixBot {
         LoggerUtil.consoleLogger();
         final Application app = new FixMaker();
         final MessageStoreFactory storeFactory = new NullStoreFactory();
-        final SessionSettings settings = FixUtility.readSettings("fix/FixBot.conf");
+        final SessionSettings settings = FixUtility.readSettings("fix/FixLocal.conf");
         final LogFactory logFactory = new Slf4jLogFactory();
         final MessageFactory messageFactory = new DefaultMessageFactory();
         final Initiator initiator = new SocketInitiator(app, storeFactory, settings,
