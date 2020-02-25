@@ -9,8 +9,24 @@ The code of conduct is described in [CODE_OF_CONDUCT.md](CODE_OF_CONDUCT.md).
 
 ## Issues
 
-We use GitHub issues to track public bugs. Please ensure your description is clear and has
-sufficient instructions to be able to reproduce the issue.
+We use GitHub issues to track bugs, enhancements and new feature requests. Please ensure that the
+issue title is clear and concise. The detailed description or body should document what needs to be
+done and why. Defects should include instructions for reproducing the issue.
+
+## Issue References
+
+GitHub issue numbers should be referenced on the last line of the commit message. Keywords can be
+used to [automatically close
+issues](https://help.github.com/en/articles/closing-issues-using-keywords). For example:
+
+```
+The Subject Line
+
+A more detailed description that explains what the change is,
+why it is needed, and how it has been implemented.
+
+Closes #123, #456
+```
 
 ## Commit Messages
 
@@ -29,21 +45,6 @@ The seven rules of a great git commit message:
 7. use the body to explain _what_ and _why_ vs. _how_.
 
 See [How to Write a Git Commit Message](http://chris.beams.io/posts/git-commit/) by Chris Beams.
-
-## Issue References
-
-GitHub issue numbers should be referenced on the last line of the commit message. Keywords can be
-used to [automatically close
-issues](https://help.github.com/en/articles/closing-issues-using-keywords). For example:
-
-```
-The Subject Line
-
-A more detailed description that explains what the change is,
-why it is needed, and how it has been implemented.
-
-Closes #123, #456
-```
 
 ## Pull Requests
 
@@ -79,6 +80,6 @@ trace the normal flow of execution in production code.
 
 ## License
 
-By contributing to Toolbox, you agree that your contributions will be licensed under the [Apache 2.0
-License](https://www.apache.org/licenses/LICENSE-2.0). A copy of the license is available in the
-[LICENSE.md](LICENSE.md) file in the root directory of this source tree.
+By contributing to Toolbox Java, you agree that your contributions will be licensed under the
+[Apache 2.0 License](https://www.apache.org/licenses/LICENSE-2.0). A copy of the license is
+available in the [LICENSE.md](LICENSE.md) file in the root directory of this source tree.

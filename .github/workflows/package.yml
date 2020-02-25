@@ -1,4 +1,4 @@
-# Copyright (C) 2019 Reactive Markets Limited
+# Copyright (C) 2020 Reactive Markets Limited
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -12,23 +12,32 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 ---
-name: Java CI Build
+name: Package
+
 on:
-  pull_request:
+  push:
     branches:
       - master
+    tags:
+      - '*'
+
 jobs:
-  build:
+  publish:
     strategy:
       matrix:
         os: [ubuntu-latest]
     runs-on: ${{ matrix.os }}
     steps:
-      - name: Checkout latest code
+      - name: Checkout the code
         uses: actions/checkout@v1
+
       - name: Set up JDK 8
         uses: actions/setup-java@v1
         with:
           java-version: 8
-      - name: Build with Gradle
-        run: ./gradlew build
+
+      - name: Publish to Github repository
+        env:
+          GITHUB_USER: x-access-token
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: ./gradlew printInfo publish -Pversion="${GITHUB_REF:10}"
