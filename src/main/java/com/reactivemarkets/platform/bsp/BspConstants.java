@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.reactivemarkets.toolbox.bsp;
+package com.reactivemarkets.platform.bsp;
 
 public final class BspConstants {
     /**

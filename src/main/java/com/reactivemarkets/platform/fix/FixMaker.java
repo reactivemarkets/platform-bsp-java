@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.reactivemarkets.toolbox.fix;
+package com.reactivemarkets.platform.fix;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

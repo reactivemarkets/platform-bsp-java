@@ -14,19 +14,17 @@
  * limitations under the License.
  */
 
-package com.reactivemarkets.toolbox.fix.field;
+package com.reactivemarkets.platform.quickfix;
 
-import com.reactivemarkets.toolbox.quickfix.LongField;
+import quickfix.Log;
+import quickfix.LogFactory;
+import quickfix.SessionID;
 
-public final class CostField extends LongField {
-    public static final int FIELD = 20001;
-    private static final long serialVersionUID = 1L;
+public final class NullLogFactory implements LogFactory {
+    private static final Log LOGGER = new NullLog();
 
-    public CostField() {
-        super(FIELD);
-    }
-
-    public CostField(final Long data) {
-        super(FIELD, data);
+    @Override
+    public Log create(final SessionID sessionId) {
+        return LOGGER;
     }
 }

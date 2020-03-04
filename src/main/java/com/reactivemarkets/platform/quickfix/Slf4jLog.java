@@ -14,11 +14,21 @@
  * limitations under the License.
  */
 
-package com.reactivemarkets.toolbox.quickfix;
+package com.reactivemarkets.platform.quickfix;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import quickfix.Log;
+import quickfix.SessionID;
 
-final class NullLog implements Log {
+final class Slf4jLog implements Log {
+    private static final Logger LOGGER = LoggerFactory.getLogger(Slf4jLog.class);
+
+    private final SessionID sessionId;
+
+    Slf4jLog(final SessionID sessionId) {
+        this.sessionId = sessionId;
+    }
 
     @Override
     public void clear() {
@@ -26,17 +36,25 @@ final class NullLog implements Log {
 
     @Override
     public void onIncoming(final String message) {
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug(sessionId + ": onIncoming: " + message);
+        }
     }
 
     @Override
     public void onOutgoing(final String message) {
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug(sessionId + ": onOutgoing: " + message);
+        }
     }
 
     @Override
     public void onEvent(final String text) {
+        LOGGER.info(sessionId + ": onEvent: " + text);
     }
 
     @Override
     public void onErrorEvent(final String text) {
+        LOGGER.error(sessionId + ": onErrorEvent: " + text);
     }
 }

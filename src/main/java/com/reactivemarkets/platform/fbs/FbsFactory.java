@@ -14,17 +14,17 @@
  * limitations under the License.
  */
 
-package com.reactivemarkets.toolbox.fbs;
+package com.reactivemarkets.platform.fbs;
 
 import com.google.flatbuffers.FlatBufferBuilder;
 import com.reactivemarkets.encoding.fbs.Asset;
 import com.reactivemarkets.encoding.fbs.Body;
 import com.reactivemarkets.encoding.fbs.Message;
-import com.reactivemarkets.toolbox.bsp.BspFactory;
+import com.reactivemarkets.platform.bsp.BspFactory;
 import io.netty.buffer.ByteBuf;
 import org.agrona.concurrent.HighResolutionClock;
 
-import static com.reactivemarkets.toolbox.bsp.BspConstants.MAX_MESSAGE_SIZE;
+import static com.reactivemarkets.platform.bsp.BspConstants.MAX_MESSAGE_SIZE;
 
 public final class FbsFactory {
 
