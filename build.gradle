@@ -19,11 +19,15 @@ import io.netifi.flatbuffers.plugin.tasks.FlatBuffers
 plugins {
     id 'application'
     id 'checkstyle'
-    id 'com.github.johnrengelman.shadow' version '5.1.0'
     id 'io.netifi.flatbuffers' version '1.0.5'
-    id 'java'
+    id 'java-library'
     id 'maven-publish'
     id 'com.diffplug.gradle.spotless' version '3.26.1'
+}
+
+ext {
+    github_user = project.findProperty('github.user') ?: System.getenv('GITHUB_USER') ?: ""
+    github_token = project.findProperty('github.token') ?: System.getenv('GITHUB_TOKEN') ?: ""
 }
 
 defaultTasks 'build'
@@ -55,11 +59,6 @@ dependencies {
     compile group: 'org.slf4j', name: 'slf4j-api', version: '1.7.+'
     compile group: 'org.slf4j', name: 'slf4j-log4j12', version: '1.7.+'
     testCompile group: 'junit', name: 'junit', version: '4.+'
-}
-
-ext {
-    github_user = project.findProperty('github.user') ?: System.getenv('GITHUB_USER') ?: ""
-    github_token = project.findProperty('github.token') ?: System.getenv('GITHUB_TOKEN') ?: ""
 }
 
 sourceSets {
@@ -95,25 +94,39 @@ task printInfo {
     }
 }
 
+java {
+    withJavadocJar()
+    withSourcesJar()
+}
+
 publishing {
     publications {
-        shadow(MavenPublication) { publication ->
-            project.shadow.component(publication)
+        mavenJava(MavenPublication) {
+            artifactId = 'toolbox-java'
+            from components.java
+            versionMapping {
+                usage('java-api') {
+                    fromResolutionOf('runtimeClasspath')
+                }
+                usage('java-runtime') {
+                    fromResolutionResult()
+                }
+            }
             pom {
                 name = 'Toolbox Java'
                 description = 'The Reactive Platform API for Java.'
                 url = 'https://opensource.reactivemarkets.com'
-                licenses {
-                    license {
-                        name = 'The Apache License, Version 2.0'
-                        url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
-                    }
-                }
                 developers {
                     developer {
                         id = 'marayl'
                         name = 'Mark Aylett'
                         email = 'mark.aylett@reactivemarkets.com'
+                    }
+                }
+                licenses {
+                    license {
+                        name = 'The Apache License, Version 2.0'
+                        url = 'http://www.apache.org/licenses/LICENSE-2.0.txt'
                     }
                 }
                 scm {

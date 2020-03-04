@@ -46,7 +46,7 @@ public final class BspConstants {
      * This upper-bound for message payloads was chosen as follows:
      * <ul>
      * <li>Max Datagram (1472) - Aeron Header (32) = 1440</li>
-     * <li>Round-down to cache-line boundary: (1440 & ~63) = 1408</li>
+     * <li>Round-down to cache-line boundary: (1440 &amp; ~63) = 1408</li>
      * <li>Subtract MPMC queue header: 1408 - 8 = 1400</li>
      * </ul>
      */
