@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.reactivemarkets.toolbox.bsp;
+package com.reactivemarkets.platform.bsp;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufAllocator;
@@ -31,12 +31,12 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.util.List;
 
-import static com.reactivemarkets.toolbox.bsp.BspConstants.INITIAL_BYTES_TO_STRIP;
-import static com.reactivemarkets.toolbox.bsp.BspConstants.LENGTH_ADJUSTMENT;
-import static com.reactivemarkets.toolbox.bsp.BspConstants.LENGTH_FIELD_LENGTH;
-import static com.reactivemarkets.toolbox.bsp.BspConstants.LENGTH_FIELD_OFFSET;
-import static com.reactivemarkets.toolbox.bsp.BspConstants.MAX_FRAME_LENGTH;
-import static com.reactivemarkets.toolbox.bsp.BspConstants.MAX_MESSAGE_SIZE;
+import static com.reactivemarkets.platform.bsp.BspConstants.INITIAL_BYTES_TO_STRIP;
+import static com.reactivemarkets.platform.bsp.BspConstants.LENGTH_ADJUSTMENT;
+import static com.reactivemarkets.platform.bsp.BspConstants.LENGTH_FIELD_LENGTH;
+import static com.reactivemarkets.platform.bsp.BspConstants.LENGTH_FIELD_OFFSET;
+import static com.reactivemarkets.platform.bsp.BspConstants.MAX_FRAME_LENGTH;
+import static com.reactivemarkets.platform.bsp.BspConstants.MAX_MESSAGE_SIZE;
 
 public final class BspFactory {
     private BspFactory() {

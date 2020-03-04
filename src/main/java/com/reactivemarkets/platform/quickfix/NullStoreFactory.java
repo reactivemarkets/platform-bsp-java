@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.reactivemarkets.toolbox.quickfix;
+package com.reactivemarkets.platform.quickfix;
 
 import quickfix.MessageStore;
 import quickfix.MessageStoreFactory;

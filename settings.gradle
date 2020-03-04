@@ -14,4 +14,4 @@
  * limitations under the License.
  */
 
-rootProject.name = 'toolbox-java'
+rootProject.name = 'platform-java'

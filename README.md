@@ -1,4 +1,4 @@
-# Toolbox: The Reactive Platform API
+# Platform Java
 
 The Reactive Platform API for Java.
 
@@ -7,16 +7,16 @@ The Reactive Platform API for Java.
 ### Linux/Mac
 
 ```bash
-git clone https://github.com/reactivemarkets/toolbox-java
-cd toolbox-java
+git clone https://github.com/reactivemarkets/platform-java
+cd platform-java
 ./gradlew build
 ```
 
 ### Windows
 
 ```bash
-git clone https://github.com/reactivemarkets/toolbox-java
-cd toolbox-java
+git clone https://github.com/reactivemarkets/platform-java
+cd platform-java
 ./gradlew.bat build
 ```
 
@@ -27,8 +27,8 @@ for submitting pull requests.
 
 ## Versioning
 
-We use [SemVer](https://semver.org/) for versioning. For the versions available, see the [tags on
-this repository](https://github.com/reactivemarkets/toolbox-java/tags).
+We use [SemVer](https://semver.org/) for versioning. For the versions available, see the [releases
+page](https://github.com/reactivemarkets/platform-java/releases).
 
 ## License
 

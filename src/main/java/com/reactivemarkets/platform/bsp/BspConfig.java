@@ -14,17 +14,16 @@
  * limitations under the License.
  */
 
-package com.reactivemarkets.toolbox.quickfix;
+package com.reactivemarkets.platform.bsp;
 
-import quickfix.Log;
-import quickfix.LogFactory;
-import quickfix.SessionID;
+public final class BspConfig {
+    public final String host;
+    public final int port;
+    public final int hbInt;
 
-public final class NullLogFactory implements LogFactory {
-    private static final Log LOGGER = new NullLog();
-
-    @Override
-    public Log create(final SessionID sessionId) {
-        return LOGGER;
+    public BspConfig(final String host, final int port, final int hbInt) {
+        this.host = host;
+        this.port = port;
+        this.hbInt = hbInt;
     }
 }

@@ -14,15 +14,15 @@
  * limitations under the License.
  */
 
-package com.reactivemarkets.toolbox.example;
+package com.reactivemarkets.platform.example;
 
 import com.reactivemarkets.encoding.fbs.AssetType;
 import com.reactivemarkets.encoding.fbs.Message;
-import com.reactivemarkets.toolbox.bsp.BspClient;
-import com.reactivemarkets.toolbox.bsp.BspConfig;
-import com.reactivemarkets.toolbox.bsp.BspHandler;
-import com.reactivemarkets.toolbox.fbs.FbsFactory;
-import com.reactivemarkets.toolbox.util.LoggerUtil;
+import com.reactivemarkets.platform.bsp.BspClient;
+import com.reactivemarkets.platform.bsp.BspConfig;
+import com.reactivemarkets.platform.bsp.BspHandler;
+import com.reactivemarkets.platform.fbs.FbsFactory;
+import com.reactivemarkets.platform.util.LoggerUtil;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.EventLoopGroup;
 import org.slf4j.Logger;
@@ -32,8 +32,8 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.util.concurrent.TimeUnit;
 
-import static com.reactivemarkets.toolbox.bsp.BspFactory.newBspClient;
-import static com.reactivemarkets.toolbox.bsp.BspFactory.newBspEventLoopGroup;
+import static com.reactivemarkets.platform.bsp.BspFactory.newBspClient;
+import static com.reactivemarkets.platform.bsp.BspFactory.newBspEventLoopGroup;
 
 public final class BspPing implements BspHandler {
 

@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.reactivemarkets.toolbox.fbs;
+package com.reactivemarkets.platform.fbs;
 
 import com.reactivemarkets.encoding.fbs.AssetType;
 import com.reactivemarkets.encoding.fbs.Message;

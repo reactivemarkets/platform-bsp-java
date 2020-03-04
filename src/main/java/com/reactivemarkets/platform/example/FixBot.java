@@ -14,13 +14,13 @@
  * limitations under the License.
  */
 
-package com.reactivemarkets.toolbox.example;
+package com.reactivemarkets.platform.example;
 
-import com.reactivemarkets.toolbox.fix.FixMaker;
-import com.reactivemarkets.toolbox.fix.FixUtility;
-import com.reactivemarkets.toolbox.quickfix.NullStoreFactory;
-import com.reactivemarkets.toolbox.quickfix.Slf4jLogFactory;
-import com.reactivemarkets.toolbox.util.LoggerUtil;
+import com.reactivemarkets.platform.fix.FixMaker;
+import com.reactivemarkets.platform.fix.FixUtility;
+import com.reactivemarkets.platform.quickfix.NullStoreFactory;
+import com.reactivemarkets.platform.quickfix.Slf4jLogFactory;
+import com.reactivemarkets.platform.util.LoggerUtil;
 import quickfix.Application;
 import quickfix.DefaultMessageFactory;
 import quickfix.Initiator;

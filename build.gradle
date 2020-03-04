@@ -41,7 +41,7 @@ applicationDefaultJvmArgs = [
 ]
 */
 
-mainClassName = 'com.reactivemarkets.toolbox.example.FixBot'
+mainClassName = 'com.reactivemarkets.platform.example.FixBot'
 sourceCompatibility = 1.8
 targetCompatibility = 1.8
 
@@ -102,7 +102,7 @@ java {
 publishing {
     publications {
         mavenJava(MavenPublication) {
-            artifactId = 'toolbox-java'
+            artifactId = 'platform-java'
             from components.java
             versionMapping {
                 usage('java-api') {
@@ -113,7 +113,7 @@ publishing {
                 }
             }
             pom {
-                name = 'Toolbox Java'
+                name = 'Platform Java'
                 description = 'The Reactive Platform API for Java.'
                 url = 'https://opensource.reactivemarkets.com'
                 developers {
@@ -130,9 +130,9 @@ publishing {
                     }
                 }
                 scm {
-                    connection = 'scm:git:git://github.com:reactivemarkets/toolbox-java.git'
-                    developerConnection = 'scm:git:ssh://github.com:reactivemarkets/toolbox-java.git'
-                    url = 'https://github.com/reactivemarkets/toolbox-java'
+                    connection = 'scm:git:git://github.com:reactivemarkets/platform-java.git'
+                    developerConnection = 'scm:git:ssh://github.com:reactivemarkets/platform-java.git'
+                    url = 'https://github.com/reactivemarkets/platform-java'
                 }
             }
         }
@@ -140,7 +140,7 @@ publishing {
     repositories {
         maven {
             name = 'github'
-            url 'https://maven.pkg.github.com/reactivemarkets/toolbox-java'
+            url 'https://maven.pkg.github.com/reactivemarkets/platform-java'
             credentials {
                 username = "${github_user}"
                 password = "${github_token}"

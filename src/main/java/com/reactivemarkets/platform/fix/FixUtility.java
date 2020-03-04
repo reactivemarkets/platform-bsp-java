@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.reactivemarkets.toolbox.fix;
+package com.reactivemarkets.platform.fix;
 
 import quickfix.ConfigError;
 import quickfix.SessionSettings;
