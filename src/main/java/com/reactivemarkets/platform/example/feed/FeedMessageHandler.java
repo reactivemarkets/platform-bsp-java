@@ -61,7 +61,9 @@ public class FeedMessageHandler implements MessageHandler.Whole<ByteBuffer> {
     }
 
     private void onLevel2Snapshot(final long timestamp, final MDSnapshotL2 ss) {
-        final MarketDepth depth = new MarketDepth();
+        final int bidCount = ss.bidSideLength();
+        final int offerCount = ss.offerSideLength();
+        final MarketDepth depth = new MarketDepth(bidCount, offerCount);
         depth.setId(ss.id());
         depth.setSource(ss.source());
         depth.setFlags(ss.flags());

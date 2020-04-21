@@ -33,6 +33,15 @@ public class MarketDepth {
     private double[] offerPrice;
     private double[] offerQty;
 
+    public MarketDepth(final int bidCount, final int offerCount) {
+        this.bidCount = bidCount;
+        this.offerCount = offerCount;
+        this.bidPrice = new double[bidCount];
+        this.bidQty = new double[bidCount];
+        this.offerPrice = new double[offerCount];
+        this.offerQty = new double[offerCount];
+    }
+
     public long getId() {
         return id;
     }
