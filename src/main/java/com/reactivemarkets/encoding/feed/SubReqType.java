@@ -18,8 +18,8 @@ package com.reactivemarkets.encoding.feed;
 
 public final class SubReqType {
   private SubReqType() { }
-  public static final short Subscribe = 1;
-  public static final short Unsubscribe = 2;
+  public static final byte Subscribe = 1;
+  public static final byte Unsubscribe = 2;
 
   public static final String[] names = { "Subscribe", "Unsubscribe", };
 

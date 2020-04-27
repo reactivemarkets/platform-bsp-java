@@ -16,13 +16,11 @@
 
 package com.reactivemarkets.encoding.feed;
 
-public final class Side {
-  private Side() { }
-  public static final byte Sell = -1;
-  public static final byte None = 0;
-  public static final byte Buy = 1;
+public final class FeedType {
+  private FeedType() { }
+  public static final byte Default = 0;
 
-  public static final String[] names = { "Sell", "None", "Buy", };
+  public static final String[] names = { "Default", };
 
-  public static String name(int e) { return names[e - Sell]; }
+  public static String name(int e) { return names[e]; }
 }

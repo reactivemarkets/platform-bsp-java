@@ -37,7 +37,7 @@ public final class PublicTrade extends Table {
   public String id() { int o = __offset(10); return o != 0 ? __string(o + bb_pos) : null; }
   public ByteBuffer idAsByteBuffer() { return __vector_as_bytebuffer(10, 1); }
   public ByteBuffer idInByteBuffer(ByteBuffer _bb) { return __vector_in_bytebuffer(_bb, 10, 1); }
-  public short side() { int o = __offset(12); return o != 0 ? bb.getShort(o + bb_pos) : 0; }
+  public byte side() { int o = __offset(12); return o != 0 ? bb.get(o + bb_pos) : 0; }
   public double qty() { int o = __offset(14); return o != 0 ? bb.getDouble(o + bb_pos) : 0.0; }
   public double price() { int o = __offset(16); return o != 0 ? bb.getDouble(o + bb_pos) : 0.0; }
   public String execVenue() { int o = __offset(18); return o != 0 ? __string(o + bb_pos) : null; }
@@ -49,7 +49,7 @@ public final class PublicTrade extends Table {
       int sourceOffset,
       int marketOffset,
       int idOffset,
-      short side,
+      byte side,
       double qty,
       double price,
       int exec_venueOffset) {
@@ -70,7 +70,7 @@ public final class PublicTrade extends Table {
   public static void addSource(FlatBufferBuilder builder, int sourceOffset) { builder.addOffset(1, sourceOffset, 0); }
   public static void addMarket(FlatBufferBuilder builder, int marketOffset) { builder.addOffset(2, marketOffset, 0); }
   public static void addId(FlatBufferBuilder builder, int idOffset) { builder.addOffset(3, idOffset, 0); }
-  public static void addSide(FlatBufferBuilder builder, short side) { builder.addShort(4, side, 0); }
+  public static void addSide(FlatBufferBuilder builder, byte side) { builder.addByte(4, side, 0); }
   public static void addQty(FlatBufferBuilder builder, double qty) { builder.addDouble(5, qty, 0.0); }
   public static void addPrice(FlatBufferBuilder builder, double price) { builder.addDouble(6, price, 0.0); }
   public static void addExecVenue(FlatBufferBuilder builder, int execVenueOffset) { builder.addOffset(7, execVenueOffset, 0); }

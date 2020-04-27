@@ -67,6 +67,10 @@ public final class FeedGatewayL2Subscription {
             client.connect();
             // create a new request with default settings for conflation, depth and grouping
             final FeedRequestParameters request = new FeedRequestParameters(UUID.randomUUID().toString(), "BTCUSD-CNB");
+            // currently supports fixed sizes at 1, 5, 10, 20
+            request.setDepth((short) 5);
+            // currently supports fixed sizes at 1 (i.e. raw) and 50 for Coinbase
+            request.setGrouping(50);
             final ByteBuffer buffer = FeedRequestMessageFactory.newSubscription(request);
 
             client.send(buffer);

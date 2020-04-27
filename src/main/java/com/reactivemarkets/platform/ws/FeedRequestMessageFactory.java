@@ -45,14 +45,14 @@ public final class FeedRequestMessageFactory {
         }
 
         final int marketsOffset = FeedRequest.createMarketsVector(builder, marketOffsets);
-        final int mdrOffset = FeedRequest.createFeedRequest(builder, reqIdOffset, SubReqType.Subscribe,
-                request.getFeedType(), request.getGrouping(), request.getConflation(), request.getDepth(),
+        final int feedRequestOffset = FeedRequest.createFeedRequest(builder, reqIdOffset, SubReqType.Subscribe,
+                request.getFeedType(), request.getDepth(), request.getGrouping(), request.getFrequency(),
                 marketsOffset);
 
         Message.startMessage(builder);
         Message.addTts(builder, HighResolutionClock.epochNanos());
         Message.addBodyType(builder, Body.FeedRequest);
-        Message.addBody(builder, mdrOffset);
+        Message.addBody(builder, feedRequestOffset);
         int message = Message.endMessage(builder);
         builder.finish(message);
 
