@@ -16,7 +16,7 @@
 
 package com.reactivemarkets.platform.ws;
 
-import com.reactivemarkets.encoding.feed.Feed;
+import com.reactivemarkets.encoding.feed.FeedType;
 
 public class FeedRequestParameters {
 
@@ -32,15 +32,15 @@ public class FeedRequestParameters {
     /**
      * Type of feed for the subscription. Currently only default supported.
      */
-    private Short feedType = Feed.Default;
+    private byte feedType = FeedType.Default;
     /**
      * Depth of the order book. Top of Book = 1.
      */
-    private Short depth = 10;
+    private short depth = 10;
     /**
      * Conflation time of order book updates in milliseconds.
      */
-    private int conflation = 1000;
+    private int frequency = 1000;
     /**
      * Grouping of order book updates in price ticks. E.g. for BTCUSD at 6501.37, 1
      * would be 6501.37, 10 would be 6501.4, 50 would be 6503.5
@@ -53,7 +53,7 @@ public class FeedRequestParameters {
         this.markets = markets;
     }
 
-    public FeedRequestParameters setFeedType(final Short feedType) {
+    public FeedRequestParameters setFeedType(final byte feedType) {
         this.feedType = feedType;
         return this;
     }
@@ -63,8 +63,8 @@ public class FeedRequestParameters {
         return this;
     }
 
-    public FeedRequestParameters setConflation(final int conflation) {
-        this.conflation = conflation;
+    public FeedRequestParameters setFrequency(final int frequency) {
+        this.frequency = frequency;
         return this;
     }
 
@@ -81,16 +81,16 @@ public class FeedRequestParameters {
         return markets;
     }
 
-    public Short getFeedType() {
+    public byte getFeedType() {
         return feedType;
     }
 
-    public Short getDepth() {
+    public short getDepth() {
         return depth;
     }
 
-    public int getConflation() {
-        return conflation;
+    public int getFrequency() {
+        return frequency;
     }
 
     public int getGrouping() {

@@ -20,12 +20,13 @@ public final class Body {
   private Body() { }
   public static final byte NONE = 0;
   public static final byte FeedRequest = 1;
-  public static final byte FeedRequestReject = 2;
-  public static final byte MDSnapshotL2 = 3;
-  public static final byte PublicTrade = 4;
-  public static final byte SessionStatus = 5;
+  public static final byte FeedRequestAck = 2;
+  public static final byte FeedRequestReject = 3;
+  public static final byte MDSnapshotL2 = 4;
+  public static final byte PublicTrade = 5;
+  public static final byte SessionStatus = 6;
 
-  public static final String[] names = { "NONE", "FeedRequest", "FeedRequestReject", "MDSnapshotL2", "PublicTrade", "SessionStatus", };
+  public static final String[] names = { "NONE", "FeedRequest", "FeedRequestAck", "FeedRequestReject", "MDSnapshotL2", "PublicTrade", "SessionStatus", };
 
   public static String name(int e) { return names[e]; }
 }
