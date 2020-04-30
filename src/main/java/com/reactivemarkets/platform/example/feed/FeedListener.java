@@ -22,4 +22,7 @@ public interface FeedListener {
 
     default void onFeedRequestReject(RequestReject reject) {
     }
+
+    default void onFeedRequestAck(RequestAck ack) {
+    }
 }

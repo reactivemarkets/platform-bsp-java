@@ -18,9 +18,9 @@ package com.reactivemarkets.encoding.feed;
 
 public final class Side {
   private Side() { }
-  public static final byte Sell = -1;
-  public static final byte None = 0;
-  public static final byte Buy = 1;
+  public static final short Sell = -1;
+  public static final short None = 0;
+  public static final short Buy = 1;
 
   public static final String[] names = { "Sell", "None", "Buy", };
 

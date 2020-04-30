@@ -21,6 +21,7 @@ import java.nio.ByteBuffer;
 import javax.websocket.MessageHandler;
 
 import com.reactivemarkets.encoding.feed.Body;
+import com.reactivemarkets.encoding.feed.FeedRequestAck;
 import com.reactivemarkets.encoding.feed.FeedRequestReject;
 import com.reactivemarkets.encoding.feed.MDLevel2;
 import com.reactivemarkets.encoding.feed.MDSnapshotL2;
@@ -31,6 +32,8 @@ public class FeedMessageHandler implements MessageHandler.Whole<ByteBuffer> {
     private final FeedListener callbackHandler;
     private static final ThreadLocal<Message> LOCAL_MESSAGE = ThreadLocal.withInitial(Message::new);
     private static final ThreadLocal<MDSnapshotL2> LOCAL_L2_SNAPSHOT = ThreadLocal.withInitial(MDSnapshotL2::new);
+    private static final ThreadLocal<FeedRequestAck> LOCAL_FEED_REQUEST_ACK = ThreadLocal
+            .withInitial(FeedRequestAck::new);
     private static final ThreadLocal<MDLevel2> LOCAL_MDLEVEL = ThreadLocal.withInitial(MDLevel2::new);
     private static final ThreadLocal<FeedRequestReject> LOCAL_REQUEST_REJECT = ThreadLocal
             .withInitial(FeedRequestReject::new);
@@ -45,6 +48,11 @@ public class FeedMessageHandler implements MessageHandler.Whole<ByteBuffer> {
         final long timestamp = msg.tts();
 
         switch (msg.bodyType()) {
+        case Body.FeedRequestAck:
+            final FeedRequestAck ack = LOCAL_FEED_REQUEST_ACK.get();
+            msg.body(ack);
+            onFeedRequestAck(timestamp, ack);
+            break;
         case Body.MDSnapshotL2:
             final MDSnapshotL2 ss = LOCAL_L2_SNAPSHOT.get();
             msg.body(ss);
@@ -60,11 +68,17 @@ public class FeedMessageHandler implements MessageHandler.Whole<ByteBuffer> {
         }
     }
 
+    private void onFeedRequestAck(final long timestamp, final FeedRequestAck reqAck) {
+        RequestAck ack = new RequestAck(timestamp, reqAck.reqId(), reqAck.feedId());
+        callbackHandler.onFeedRequestAck(ack);
+    }
+
     private void onLevel2Snapshot(final long timestamp, final MDSnapshotL2 ss) {
         final int bidCount = ss.bidSideLength();
         final int offerCount = ss.offerSideLength();
         final MarketDepth depth = new MarketDepth(bidCount, offerCount);
         depth.setId(ss.id());
+        depth.setFeedId(ss.feedId());
         depth.setSource(ss.source());
         depth.setFlags(ss.flags());
         depth.setBidCount(ss.bidSideLength());

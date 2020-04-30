@@ -18,7 +18,7 @@ package com.reactivemarkets.encoding.feed;
 
 public final class FeedType {
   private FeedType() { }
-  public static final byte Default = 0;
+  public static final short Default = 0;
 
   public static final String[] names = { "Default", };
 
