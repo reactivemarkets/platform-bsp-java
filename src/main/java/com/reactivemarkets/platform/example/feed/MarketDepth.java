@@ -21,6 +21,7 @@ import java.util.Arrays;
 public class MarketDepth {
 
     private long id;
+    private int feedId;
     private long flags;
     private long timestamp;
     private long sourceTimestamp;
@@ -154,11 +155,19 @@ public class MarketDepth {
         this.source = source;
     }
 
+    public int getFeedId() {
+        return feedId;
+    }
+
+    public void setFeedId(final int feedId) {
+        this.feedId = feedId;
+    }
+
     @Override
     public String toString() {
-        return "MarketDepth [id=" + id + ", flags=" + flags + ", timestamp=" + timestamp + ", sourceTimestamp="
-                + sourceTimestamp + ", symbol=" + symbol + ", source=" + source + ", bidCount=" + bidCount
-                + ", offerCount=" + offerCount + ", bidPrice=" + Arrays.toString(bidPrice) + ", bidQty="
+        return "MarketDepth [id=" + id + ", feedId=" + feedId + ", flags=" + flags + ", timestamp=" + timestamp
+                + ", sourceTimestamp=" + sourceTimestamp + ", symbol=" + symbol + ", source=" + source + ", bidCount="
+                + bidCount + ", offerCount=" + offerCount + ", bidPrice=" + Arrays.toString(bidPrice) + ", bidQty="
                 + Arrays.toString(bidQty) + ", offerPrice=" + Arrays.toString(offerPrice) + ", offerQty="
                 + Arrays.toString(offerQty) + "]";
     }
