@@ -32,7 +32,7 @@ public class FeedRequestParameters {
     /**
      * Type of feed for the subscription. Currently only default supported.
      */
-    private byte feedType = FeedType.Default;
+    private short feedType = FeedType.Default;
     /**
      * Depth of the order book. Top of Book = 1.
      */
@@ -40,7 +40,7 @@ public class FeedRequestParameters {
     /**
      * Conflation time of order book updates in milliseconds.
      */
-    private int frequency = 1000;
+    private short frequency = 1000;
     /**
      * Grouping of order book updates in price ticks. E.g. for BTCUSD at 6501.37, 1
      * would be 6501.37, 10 would be 6501.4, 50 would be 6503.5
@@ -63,7 +63,7 @@ public class FeedRequestParameters {
         return this;
     }
 
-    public FeedRequestParameters setFrequency(final int frequency) {
+    public FeedRequestParameters setFrequency(final short frequency) {
         this.frequency = frequency;
         return this;
     }
@@ -81,7 +81,7 @@ public class FeedRequestParameters {
         return markets;
     }
 
-    public byte getFeedType() {
+    public short getFeedType() {
         return feedType;
     }
 
@@ -89,7 +89,7 @@ public class FeedRequestParameters {
         return depth;
     }
 
-    public int getFrequency() {
+    public short getFrequency() {
         return frequency;
     }
 

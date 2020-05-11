@@ -32,9 +32,9 @@ public final class FeedRequest extends Table {
   public ByteBuffer reqIdInByteBuffer(ByteBuffer _bb) { return __vector_in_bytebuffer(_bb, 4, 1); }
   public short subReqType() { int o = __offset(6); return o != 0 ? bb.getShort(o + bb_pos) : 1; }
   public short feedType() { int o = __offset(8); return o != 0 ? bb.getShort(o + bb_pos) : 0; }
-  public int depth() { int o = __offset(10); return o != 0 ? bb.get(o + bb_pos) & 0xFF : 0; }
-  public int grouping() { int o = __offset(12); return o != 0 ? bb.getShort(o + bb_pos) & 0xFFFF : 0; }
-  public int frequency() { int o = __offset(14); return o != 0 ? bb.getInt(o + bb_pos) : 0; }
+  public int grouping() { int o = __offset(10); return o != 0 ? bb.getShort(o + bb_pos) & 0xFFFF : 0; }
+  public short depth() { int o = __offset(12); return o != 0 ? bb.getShort(o + bb_pos) : 0; }
+  public short frequency() { int o = __offset(14); return o != 0 ? bb.getShort(o + bb_pos) : 0; }
   public String markets(int j) { int o = __offset(16); return o != 0 ? __string(__vector(o) + j * 4) : null; }
   public int marketsLength() { int o = __offset(16); return o != 0 ? __vector_len(o) : 0; }
 
@@ -42,18 +42,18 @@ public final class FeedRequest extends Table {
       int req_idOffset,
       short sub_req_type,
       short feed_type,
-      int depth,
       int grouping,
-      int frequency,
+      short depth,
+      short frequency,
       int marketsOffset) {
     builder.startObject(7);
     FeedRequest.addMarkets(builder, marketsOffset);
-    FeedRequest.addFrequency(builder, frequency);
     FeedRequest.addReqId(builder, req_idOffset);
+    FeedRequest.addFrequency(builder, frequency);
+    FeedRequest.addDepth(builder, depth);
     FeedRequest.addGrouping(builder, grouping);
     FeedRequest.addFeedType(builder, feed_type);
     FeedRequest.addSubReqType(builder, sub_req_type);
-    FeedRequest.addDepth(builder, depth);
     return FeedRequest.endFeedRequest(builder);
   }
 
@@ -61,9 +61,9 @@ public final class FeedRequest extends Table {
   public static void addReqId(FlatBufferBuilder builder, int reqIdOffset) { builder.addOffset(0, reqIdOffset, 0); }
   public static void addSubReqType(FlatBufferBuilder builder, short subReqType) { builder.addShort(1, subReqType, 1); }
   public static void addFeedType(FlatBufferBuilder builder, short feedType) { builder.addShort(2, feedType, 0); }
-  public static void addDepth(FlatBufferBuilder builder, int depth) { builder.addByte(3, (byte)depth, (byte)0); }
-  public static void addGrouping(FlatBufferBuilder builder, int grouping) { builder.addShort(4, (short)grouping, (short)0); }
-  public static void addFrequency(FlatBufferBuilder builder, int frequency) { builder.addInt(5, frequency, 0); }
+  public static void addGrouping(FlatBufferBuilder builder, int grouping) { builder.addShort(3, (short)grouping, (short)0); }
+  public static void addDepth(FlatBufferBuilder builder, short depth) { builder.addShort(4, depth, 0); }
+  public static void addFrequency(FlatBufferBuilder builder, short frequency) { builder.addShort(5, frequency, 0); }
   public static void addMarkets(FlatBufferBuilder builder, int marketsOffset) { builder.addOffset(6, marketsOffset, 0); }
   public static int createMarketsVector(FlatBufferBuilder builder, int[] data) { builder.startVector(4, data.length, 4); for (int i = data.length - 1; i >= 0; i--) builder.addOffset(data[i]); return builder.endVector(); }
   public static void startMarketsVector(FlatBufferBuilder builder, int numElems) { builder.startVector(4, numElems, 4); }

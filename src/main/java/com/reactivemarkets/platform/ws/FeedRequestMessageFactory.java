@@ -46,7 +46,7 @@ public final class FeedRequestMessageFactory {
 
         final int marketsOffset = FeedRequest.createMarketsVector(builder, marketOffsets);
         final int feedRequestOffset = FeedRequest.createFeedRequest(builder, reqIdOffset, SubReqType.Subscribe,
-                request.getFeedType(), request.getDepth(), request.getGrouping(), request.getFrequency(),
+                request.getFeedType(), request.getGrouping(), request.getDepth(), request.getFrequency(),
                 marketsOffset);
 
         Message.startMessage(builder);
