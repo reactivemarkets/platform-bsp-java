@@ -79,6 +79,7 @@ public class FeedMessageHandler implements MessageHandler.Whole<ByteBuffer> {
         final MarketDepth depth = new MarketDepth(bidCount, offerCount);
         depth.setId(ss.id());
         depth.setFeedId(ss.feedId());
+        depth.setDepth(ss.depth());
         depth.setSource(ss.source());
         depth.setFlags(ss.flags());
         depth.setBidCount(ss.bidSideLength());

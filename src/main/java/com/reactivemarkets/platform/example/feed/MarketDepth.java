@@ -22,6 +22,7 @@ public class MarketDepth {
 
     private long id;
     private int feedId;
+    private int depth;
     private long flags;
     private long timestamp;
     private long sourceTimestamp;
@@ -163,12 +164,20 @@ public class MarketDepth {
         this.feedId = feedId;
     }
 
+    public int getDepth() {
+        return depth;
+    }
+
+    public void setDepth(final int depth) {
+        this.depth = depth;
+    }
+
     @Override
     public String toString() {
-        return "MarketDepth [id=" + id + ", feedId=" + feedId + ", flags=" + flags + ", timestamp=" + timestamp
-                + ", sourceTimestamp=" + sourceTimestamp + ", symbol=" + symbol + ", source=" + source + ", bidCount="
-                + bidCount + ", offerCount=" + offerCount + ", bidPrice=" + Arrays.toString(bidPrice) + ", bidQty="
-                + Arrays.toString(bidQty) + ", offerPrice=" + Arrays.toString(offerPrice) + ", offerQty="
+        return "MarketDepth [id=" + id + ", feedId=" + feedId + ", depth=" + depth + ", flags=" + flags + ", timestamp="
+                + timestamp + ", sourceTimestamp=" + sourceTimestamp + ", symbol=" + symbol + ", source=" + source
+                + ", bidCount=" + bidCount + ", offerCount=" + offerCount + ", bidPrice=" + Arrays.toString(bidPrice)
+                + ", bidQty=" + Arrays.toString(bidQty) + ", offerPrice=" + Arrays.toString(offerPrice) + ", offerQty="
                 + Arrays.toString(offerQty) + "]";
     }
 }

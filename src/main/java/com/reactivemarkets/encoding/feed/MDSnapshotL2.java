@@ -36,13 +36,14 @@ public final class MDSnapshotL2 extends Table {
   public ByteBuffer marketInByteBuffer(ByteBuffer _bb) { return __vector_in_bytebuffer(_bb, 8, 1); }
   public int feedId() { int o = __offset(10); return o != 0 ? bb.getInt(o + bb_pos) : 0; }
   public long id() { int o = __offset(12); return o != 0 ? bb.getLong(o + bb_pos) : 0L; }
-  public int flags() { int o = __offset(14); return o != 0 ? bb.getShort(o + bb_pos) & 0xFFFF : 0; }
+  public short depth() { int o = __offset(14); return o != 0 ? bb.getShort(o + bb_pos) : 0; }
+  public int flags() { int o = __offset(16); return o != 0 ? bb.getShort(o + bb_pos) & 0xFFFF : 0; }
   public MDLevel2 bidSide(int j) { return bidSide(new MDLevel2(), j); }
-  public MDLevel2 bidSide(MDLevel2 obj, int j) { int o = __offset(16); return o != 0 ? obj.__assign(__vector(o) + j * 16, bb) : null; }
-  public int bidSideLength() { int o = __offset(16); return o != 0 ? __vector_len(o) : 0; }
+  public MDLevel2 bidSide(MDLevel2 obj, int j) { int o = __offset(18); return o != 0 ? obj.__assign(__vector(o) + j * 16, bb) : null; }
+  public int bidSideLength() { int o = __offset(18); return o != 0 ? __vector_len(o) : 0; }
   public MDLevel2 offerSide(int j) { return offerSide(new MDLevel2(), j); }
-  public MDLevel2 offerSide(MDLevel2 obj, int j) { int o = __offset(18); return o != 0 ? obj.__assign(__vector(o) + j * 16, bb) : null; }
-  public int offerSideLength() { int o = __offset(18); return o != 0 ? __vector_len(o) : 0; }
+  public MDLevel2 offerSide(MDLevel2 obj, int j) { int o = __offset(20); return o != 0 ? obj.__assign(__vector(o) + j * 16, bb) : null; }
+  public int offerSideLength() { int o = __offset(20); return o != 0 ? __vector_len(o) : 0; }
 
   public static int createMDSnapshotL2(FlatBufferBuilder builder,
       long source_ts,
@@ -50,10 +51,11 @@ public final class MDSnapshotL2 extends Table {
       int marketOffset,
       int feed_id,
       long id,
+      short depth,
       int flags,
       int bid_sideOffset,
       int offer_sideOffset) {
-    builder.startObject(8);
+    builder.startObject(9);
     MDSnapshotL2.addId(builder, id);
     MDSnapshotL2.addSourceTs(builder, source_ts);
     MDSnapshotL2.addOfferSide(builder, offer_sideOffset);
@@ -62,19 +64,21 @@ public final class MDSnapshotL2 extends Table {
     MDSnapshotL2.addMarket(builder, marketOffset);
     MDSnapshotL2.addSource(builder, sourceOffset);
     MDSnapshotL2.addFlags(builder, flags);
+    MDSnapshotL2.addDepth(builder, depth);
     return MDSnapshotL2.endMDSnapshotL2(builder);
   }
 
-  public static void startMDSnapshotL2(FlatBufferBuilder builder) { builder.startObject(8); }
+  public static void startMDSnapshotL2(FlatBufferBuilder builder) { builder.startObject(9); }
   public static void addSourceTs(FlatBufferBuilder builder, long sourceTs) { builder.addLong(0, sourceTs, 0L); }
   public static void addSource(FlatBufferBuilder builder, int sourceOffset) { builder.addOffset(1, sourceOffset, 0); }
   public static void addMarket(FlatBufferBuilder builder, int marketOffset) { builder.addOffset(2, marketOffset, 0); }
   public static void addFeedId(FlatBufferBuilder builder, int feedId) { builder.addInt(3, feedId, 0); }
   public static void addId(FlatBufferBuilder builder, long id) { builder.addLong(4, id, 0L); }
-  public static void addFlags(FlatBufferBuilder builder, int flags) { builder.addShort(5, (short)flags, (short)0); }
-  public static void addBidSide(FlatBufferBuilder builder, int bidSideOffset) { builder.addOffset(6, bidSideOffset, 0); }
+  public static void addDepth(FlatBufferBuilder builder, short depth) { builder.addShort(5, depth, 0); }
+  public static void addFlags(FlatBufferBuilder builder, int flags) { builder.addShort(6, (short)flags, (short)0); }
+  public static void addBidSide(FlatBufferBuilder builder, int bidSideOffset) { builder.addOffset(7, bidSideOffset, 0); }
   public static void startBidSideVector(FlatBufferBuilder builder, int numElems) { builder.startVector(16, numElems, 8); }
-  public static void addOfferSide(FlatBufferBuilder builder, int offerSideOffset) { builder.addOffset(7, offerSideOffset, 0); }
+  public static void addOfferSide(FlatBufferBuilder builder, int offerSideOffset) { builder.addOffset(8, offerSideOffset, 0); }
   public static void startOfferSideVector(FlatBufferBuilder builder, int numElems) { builder.startVector(16, numElems, 8); }
   public static int endMDSnapshotL2(FlatBufferBuilder builder) {
     int o = builder.endObject();
