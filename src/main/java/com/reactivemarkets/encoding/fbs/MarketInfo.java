@@ -2,89 +2,51 @@
 
 package com.reactivemarkets.encoding.fbs;
 
-import com.google.flatbuffers.FlatBufferBuilder;
-import com.google.flatbuffers.Table;
-
-import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
+import java.nio.*;
+import java.lang.*;
+import java.util.*;
+import com.google.flatbuffers.*;
 
 @SuppressWarnings("unused")
 public final class MarketInfo extends Table {
-    public static MarketInfo getRootAsMarketInfo(ByteBuffer _bb) {
-        return getRootAsMarketInfo(_bb, new MarketInfo());
-    }
+  public static void ValidateVersion() { Constants.FLATBUFFERS_1_12_0(); }
+  public static MarketInfo getRootAsMarketInfo(ByteBuffer _bb) { return getRootAsMarketInfo(_bb, new MarketInfo()); }
+  public static MarketInfo getRootAsMarketInfo(ByteBuffer _bb, MarketInfo obj) { _bb.order(ByteOrder.LITTLE_ENDIAN); return (obj.__assign(_bb.getInt(_bb.position()) + _bb.position(), _bb)); }
+  public void __init(int _i, ByteBuffer _bb) { __reset(_i, _bb); }
+  public MarketInfo __assign(int _i, ByteBuffer _bb) { __init(_i, _bb); return this; }
 
-    public static MarketInfo getRootAsMarketInfo(ByteBuffer _bb, MarketInfo obj) {
-        _bb.order(ByteOrder.LITTLE_ENDIAN);
-        return (obj.__assign(_bb.getInt(_bb.position()) + _bb.position(), _bb));
-    }
+  public String market() { int o = __offset(4); return o != 0 ? __string(o + bb_pos) : null; }
+  public ByteBuffer marketAsByteBuffer() { return __vector_as_bytebuffer(4, 1); }
+  public ByteBuffer marketInByteBuffer(ByteBuffer _bb) { return __vector_in_bytebuffer(_bb, 4, 1); }
+  public long marketState() { int o = __offset(6); return o != 0 ? (long)bb.getInt(o + bb_pos) & 0xFFFFFFFFL : 0L; }
+  public int settlDate() { int o = __offset(8); return o != 0 ? bb.getInt(o + bb_pos) : 0; }
 
-    public static int createMarketInfo(FlatBufferBuilder builder,
-                                       int marketOffset,
-                                       long market_state,
-                                       int settl_date) {
-        builder.startObject(3);
-        MarketInfo.addSettlDate(builder, settl_date);
-        MarketInfo.addMarketState(builder, market_state);
-        MarketInfo.addMarket(builder, marketOffset);
-        return MarketInfo.endMarketInfo(builder);
-    }
+  public static int createMarketInfo(FlatBufferBuilder builder,
+      int marketOffset,
+      long market_state,
+      int settl_date) {
+    builder.startTable(3);
+    MarketInfo.addSettlDate(builder, settl_date);
+    MarketInfo.addMarketState(builder, market_state);
+    MarketInfo.addMarket(builder, marketOffset);
+    return MarketInfo.endMarketInfo(builder);
+  }
 
-    public static void startMarketInfo(FlatBufferBuilder builder) {
-        builder.startObject(3);
-    }
+  public static void startMarketInfo(FlatBufferBuilder builder) { builder.startTable(3); }
+  public static void addMarket(FlatBufferBuilder builder, int marketOffset) { builder.addOffset(0, marketOffset, 0); }
+  public static void addMarketState(FlatBufferBuilder builder, long marketState) { builder.addInt(1, (int)marketState, (int)0L); }
+  public static void addSettlDate(FlatBufferBuilder builder, int settlDate) { builder.addInt(2, settlDate, 0); }
+  public static int endMarketInfo(FlatBufferBuilder builder) {
+    int o = builder.endTable();
+    builder.required(o, 4);  // market
+    return o;
+  }
 
-    public static void addMarket(FlatBufferBuilder builder, int marketOffset) {
-        builder.addOffset(0, marketOffset, 0);
-    }
+  public static final class Vector extends BaseVector {
+    public Vector __assign(int _vector, int _element_size, ByteBuffer _bb) { __reset(_vector, _element_size, _bb); return this; }
 
-    public static void addMarketState(FlatBufferBuilder builder, long marketState) {
-        builder.addInt(1, (int) marketState, (int) 0L);
-    }
-
-    public static void addSettlDate(FlatBufferBuilder builder, int settlDate) {
-        builder.addInt(2, settlDate, 0);
-    }
-
-    public static int endMarketInfo(FlatBufferBuilder builder) {
-        int o = builder.endObject();
-        builder.required(o, 4);  // market
-        return o;
-    }
-
-    public void __init(int _i, ByteBuffer _bb) {
-        bb_pos = _i;
-        bb = _bb;
-        vtable_start = bb_pos - bb.getInt(bb_pos);
-        vtable_size = bb.getShort(vtable_start);
-    }
-
-    public MarketInfo __assign(int _i, ByteBuffer _bb) {
-        __init(_i, _bb);
-        return this;
-    }
-
-    public String market() {
-        int o = __offset(4);
-        return o != 0 ? __string(o + bb_pos) : null;
-    }
-
-    public ByteBuffer marketAsByteBuffer() {
-        return __vector_as_bytebuffer(4, 1);
-    }
-
-    public ByteBuffer marketInByteBuffer(ByteBuffer _bb) {
-        return __vector_in_bytebuffer(_bb, 4, 1);
-    }
-
-    public long marketState() {
-        int o = __offset(6);
-        return o != 0 ? (long) bb.getInt(o + bb_pos) & 0xFFFFFFFFL : 0L;
-    }
-
-    public int settlDate() {
-        int o = __offset(8);
-        return o != 0 ? bb.getInt(o + bb_pos) : 0;
-    }
+    public MarketInfo get(int j) { return get(new MarketInfo(), j); }
+    public MarketInfo get(MarketInfo obj, int j) {  return obj.__assign(__indirect(__element(j), bb), bb); }
+  }
 }
 

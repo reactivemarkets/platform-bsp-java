@@ -3,17 +3,14 @@
 package com.reactivemarkets.encoding.fbs;
 
 public final class TimeType {
-    public static final short None = 0;
-    public static final short GTC = 1;
-    public static final short IOC = 2;
-    public static final short FOK = 3;
-    public static final String[] names = {"None", "GTC", "IOC", "FOK",};
+  private TimeType() { }
+  public static final short None = 0;
+  public static final short GTC = 1;
+  public static final short IOC = 2;
+  public static final short FOK = 3;
 
-    private TimeType() {
-    }
+  public static final String[] names = { "None", "GTC", "IOC", "FOK", };
 
-    public static String name(int e) {
-        return names[e];
-    }
+  public static String name(int e) { return names[e]; }
 }
 

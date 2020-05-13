@@ -3,16 +3,13 @@
 package com.reactivemarkets.encoding.fbs;
 
 public final class SubReqType {
-    public static final short Snapshot = 0;
-    public static final short Subscribe = 1;
-    public static final short Unsubscribe = 2;
-    public static final String[] names = {"Snapshot", "Subscribe", "Unsubscribe",};
+  private SubReqType() { }
+  public static final short Snapshot = 0;
+  public static final short Subscribe = 1;
+  public static final short Unsubscribe = 2;
 
-    private SubReqType() {
-    }
+  public static final String[] names = { "Snapshot", "Subscribe", "Unsubscribe", };
 
-    public static String name(int e) {
-        return names[e];
-    }
+  public static String name(int e) { return names[e]; }
 }
 

@@ -16,7 +16,7 @@
 
 package com.reactivemarkets.platform.ws;
 
-import com.reactivemarkets.encoding.feed.FeedType;
+import com.reactivemarkets.papi.FeedType;
 
 public class FeedRequestParameters {
 

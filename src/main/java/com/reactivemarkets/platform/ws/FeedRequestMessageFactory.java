@@ -21,10 +21,10 @@ import java.nio.ByteBuffer;
 import org.agrona.concurrent.HighResolutionClock;
 
 import com.google.flatbuffers.FlatBufferBuilder;
-import com.reactivemarkets.encoding.feed.Body;
-import com.reactivemarkets.encoding.feed.FeedRequest;
-import com.reactivemarkets.encoding.feed.Message;
-import com.reactivemarkets.encoding.feed.SubReqType;
+import com.reactivemarkets.papi.Body;
+import com.reactivemarkets.papi.FeedRequest;
+import com.reactivemarkets.papi.Message;
+import com.reactivemarkets.papi.SubReqType;
 import com.reactivemarkets.platform.fbs.FbsFactory;
 
 public final class FeedRequestMessageFactory {

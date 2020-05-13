@@ -20,20 +20,20 @@ import java.nio.ByteBuffer;
 
 import javax.websocket.MessageHandler;
 
-import com.reactivemarkets.encoding.feed.Body;
-import com.reactivemarkets.encoding.feed.FeedRequestAck;
-import com.reactivemarkets.encoding.feed.FeedRequestReject;
-import com.reactivemarkets.encoding.feed.MDLevel2;
-import com.reactivemarkets.encoding.feed.MDSnapshotL2;
-import com.reactivemarkets.encoding.feed.Message;
+import com.reactivemarkets.papi.Body;
+import com.reactivemarkets.papi.FeedRequestAccept;
+import com.reactivemarkets.papi.FeedRequestReject;
+import com.reactivemarkets.papi.MDLevel2;
+import com.reactivemarkets.papi.MDSnapshotL2;
+import com.reactivemarkets.papi.Message;
 
 public class FeedMessageHandler implements MessageHandler.Whole<ByteBuffer> {
 
     private final FeedListener callbackHandler;
     private static final ThreadLocal<Message> LOCAL_MESSAGE = ThreadLocal.withInitial(Message::new);
     private static final ThreadLocal<MDSnapshotL2> LOCAL_L2_SNAPSHOT = ThreadLocal.withInitial(MDSnapshotL2::new);
-    private static final ThreadLocal<FeedRequestAck> LOCAL_FEED_REQUEST_ACK = ThreadLocal
-            .withInitial(FeedRequestAck::new);
+    private static final ThreadLocal<FeedRequestAccept> LOCAL_FEED_REQUEST_ACK = ThreadLocal
+            .withInitial(FeedRequestAccept::new);
     private static final ThreadLocal<MDLevel2> LOCAL_MDLEVEL = ThreadLocal.withInitial(MDLevel2::new);
     private static final ThreadLocal<FeedRequestReject> LOCAL_REQUEST_REJECT = ThreadLocal
             .withInitial(FeedRequestReject::new);
@@ -48,8 +48,8 @@ public class FeedMessageHandler implements MessageHandler.Whole<ByteBuffer> {
         final long timestamp = msg.tts();
 
         switch (msg.bodyType()) {
-        case Body.FeedRequestAck:
-            final FeedRequestAck ack = LOCAL_FEED_REQUEST_ACK.get();
+        case Body.FeedRequestAccept:
+            final FeedRequestAccept ack = LOCAL_FEED_REQUEST_ACK.get();
             msg.body(ack);
             onFeedRequestAck(timestamp, ack);
             break;
@@ -68,7 +68,7 @@ public class FeedMessageHandler implements MessageHandler.Whole<ByteBuffer> {
         }
     }
 
-    private void onFeedRequestAck(final long timestamp, final FeedRequestAck reqAck) {
+    private void onFeedRequestAck(final long timestamp, final FeedRequestAccept reqAck) {
         RequestAck ack = new RequestAck(timestamp, reqAck.reqId(), reqAck.feedId());
         callbackHandler.onFeedRequestAck(ack);
     }

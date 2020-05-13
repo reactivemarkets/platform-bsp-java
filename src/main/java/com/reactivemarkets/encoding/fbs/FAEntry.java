@@ -2,117 +2,62 @@
 
 package com.reactivemarkets.encoding.fbs;
 
-import com.google.flatbuffers.FlatBufferBuilder;
-import com.google.flatbuffers.Table;
-
-import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
+import java.nio.*;
+import java.lang.*;
+import java.util.*;
+import com.google.flatbuffers.*;
 
 @SuppressWarnings("unused")
 public final class FAEntry extends Table {
-    public static FAEntry getRootAsFAEntry(ByteBuffer _bb) {
-        return getRootAsFAEntry(_bb, new FAEntry());
-    }
+  public static void ValidateVersion() { Constants.FLATBUFFERS_1_12_0(); }
+  public static FAEntry getRootAsFAEntry(ByteBuffer _bb) { return getRootAsFAEntry(_bb, new FAEntry()); }
+  public static FAEntry getRootAsFAEntry(ByteBuffer _bb, FAEntry obj) { _bb.order(ByteOrder.LITTLE_ENDIAN); return (obj.__assign(_bb.getInt(_bb.position()) + _bb.position(), _bb)); }
+  public void __init(int _i, ByteBuffer _bb) { __reset(_i, _bb); }
+  public FAEntry __assign(int _i, ByteBuffer _bb) { __init(_i, _bb); return this; }
 
-    public static FAEntry getRootAsFAEntry(ByteBuffer _bb, FAEntry obj) {
-        _bb.order(ByteOrder.LITTLE_ENDIAN);
-        return (obj.__assign(_bb.getInt(_bb.position()) + _bb.position(), _bb));
-    }
+  public int flags() { int o = __offset(4); return o != 0 ? bb.getShort(o + bb_pos) & 0xFFFF : 0; }
+  public int venueId() { int o = __offset(6); return o != 0 ? bb.getInt(o + bb_pos) : 0; }
+  public com.reactivemarkets.encoding.fbs.FALevel bids(int j) { return bids(new com.reactivemarkets.encoding.fbs.FALevel(), j); }
+  public com.reactivemarkets.encoding.fbs.FALevel bids(com.reactivemarkets.encoding.fbs.FALevel obj, int j) { int o = __offset(8); return o != 0 ? obj.__assign(__vector(o) + j * 16, bb) : null; }
+  public int bidsLength() { int o = __offset(8); return o != 0 ? __vector_len(o) : 0; }
+  public com.reactivemarkets.encoding.fbs.FALevel.Vector bidsVector() { return bidsVector(new com.reactivemarkets.encoding.fbs.FALevel.Vector()); }
+  public com.reactivemarkets.encoding.fbs.FALevel.Vector bidsVector(com.reactivemarkets.encoding.fbs.FALevel.Vector obj) { int o = __offset(8); return o != 0 ? obj.__assign(__vector(o), 16, bb) : null; }
+  public com.reactivemarkets.encoding.fbs.FALevel offers(int j) { return offers(new com.reactivemarkets.encoding.fbs.FALevel(), j); }
+  public com.reactivemarkets.encoding.fbs.FALevel offers(com.reactivemarkets.encoding.fbs.FALevel obj, int j) { int o = __offset(10); return o != 0 ? obj.__assign(__vector(o) + j * 16, bb) : null; }
+  public int offersLength() { int o = __offset(10); return o != 0 ? __vector_len(o) : 0; }
+  public com.reactivemarkets.encoding.fbs.FALevel.Vector offersVector() { return offersVector(new com.reactivemarkets.encoding.fbs.FALevel.Vector()); }
+  public com.reactivemarkets.encoding.fbs.FALevel.Vector offersVector(com.reactivemarkets.encoding.fbs.FALevel.Vector obj) { int o = __offset(10); return o != 0 ? obj.__assign(__vector(o), 16, bb) : null; }
 
-    public static int createFAEntry(FlatBufferBuilder builder,
-                                    int flags,
-                                    int venue_id,
-                                    int bidsOffset,
-                                    int offersOffset) {
-        builder.startObject(4);
-        FAEntry.addOffers(builder, offersOffset);
-        FAEntry.addBids(builder, bidsOffset);
-        FAEntry.addVenueId(builder, venue_id);
-        FAEntry.addFlags(builder, flags);
-        return FAEntry.endFAEntry(builder);
-    }
+  public static int createFAEntry(FlatBufferBuilder builder,
+      int flags,
+      int venue_id,
+      int bidsOffset,
+      int offersOffset) {
+    builder.startTable(4);
+    FAEntry.addOffers(builder, offersOffset);
+    FAEntry.addBids(builder, bidsOffset);
+    FAEntry.addVenueId(builder, venue_id);
+    FAEntry.addFlags(builder, flags);
+    return FAEntry.endFAEntry(builder);
+  }
 
-    public static void startFAEntry(FlatBufferBuilder builder) {
-        builder.startObject(4);
-    }
+  public static void startFAEntry(FlatBufferBuilder builder) { builder.startTable(4); }
+  public static void addFlags(FlatBufferBuilder builder, int flags) { builder.addShort(0, (short)flags, (short)0); }
+  public static void addVenueId(FlatBufferBuilder builder, int venueId) { builder.addInt(1, venueId, 0); }
+  public static void addBids(FlatBufferBuilder builder, int bidsOffset) { builder.addOffset(2, bidsOffset, 0); }
+  public static void startBidsVector(FlatBufferBuilder builder, int numElems) { builder.startVector(16, numElems, 8); }
+  public static void addOffers(FlatBufferBuilder builder, int offersOffset) { builder.addOffset(3, offersOffset, 0); }
+  public static void startOffersVector(FlatBufferBuilder builder, int numElems) { builder.startVector(16, numElems, 8); }
+  public static int endFAEntry(FlatBufferBuilder builder) {
+    int o = builder.endTable();
+    return o;
+  }
 
-    public static void addFlags(FlatBufferBuilder builder, int flags) {
-        builder.addShort(0, (short) flags, (short) 0);
-    }
+  public static final class Vector extends BaseVector {
+    public Vector __assign(int _vector, int _element_size, ByteBuffer _bb) { __reset(_vector, _element_size, _bb); return this; }
 
-    public static void addVenueId(FlatBufferBuilder builder, int venueId) {
-        builder.addInt(1, venueId, 0);
-    }
-
-    public static void addBids(FlatBufferBuilder builder, int bidsOffset) {
-        builder.addOffset(2, bidsOffset, 0);
-    }
-
-    public static void startBidsVector(FlatBufferBuilder builder, int numElems) {
-        builder.startVector(16, numElems, 8);
-    }
-
-    public static void addOffers(FlatBufferBuilder builder, int offersOffset) {
-        builder.addOffset(3, offersOffset, 0);
-    }
-
-    public static void startOffersVector(FlatBufferBuilder builder, int numElems) {
-        builder.startVector(16, numElems, 8);
-    }
-
-    public static int endFAEntry(FlatBufferBuilder builder) {
-        int o = builder.endObject();
-        return o;
-    }
-
-    public void __init(int _i, ByteBuffer _bb) {
-        bb_pos = _i;
-        bb = _bb;
-        vtable_start = bb_pos - bb.getInt(bb_pos);
-        vtable_size = bb.getShort(vtable_start);
-    }
-
-    public FAEntry __assign(int _i, ByteBuffer _bb) {
-        __init(_i, _bb);
-        return this;
-    }
-
-    public int flags() {
-        int o = __offset(4);
-        return o != 0 ? bb.getShort(o + bb_pos) & 0xFFFF : 0;
-    }
-
-    public int venueId() {
-        int o = __offset(6);
-        return o != 0 ? bb.getInt(o + bb_pos) : 0;
-    }
-
-    public FALevel bids(int j) {
-        return bids(new FALevel(), j);
-    }
-
-    public FALevel bids(FALevel obj, int j) {
-        int o = __offset(8);
-        return o != 0 ? obj.__assign(__vector(o) + j * 16, bb) : null;
-    }
-
-    public int bidsLength() {
-        int o = __offset(8);
-        return o != 0 ? __vector_len(o) : 0;
-    }
-
-    public FALevel offers(int j) {
-        return offers(new FALevel(), j);
-    }
-
-    public FALevel offers(FALevel obj, int j) {
-        int o = __offset(10);
-        return o != 0 ? obj.__assign(__vector(o) + j * 16, bb) : null;
-    }
-
-    public int offersLength() {
-        int o = __offset(10);
-        return o != 0 ? __vector_len(o) : 0;
-    }
+    public FAEntry get(int j) { return get(new FAEntry(), j); }
+    public FAEntry get(FAEntry obj, int j) {  return obj.__assign(__indirect(__element(j), bb), bb); }
+  }
 }
 

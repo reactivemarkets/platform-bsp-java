@@ -3,16 +3,13 @@
 package com.reactivemarkets.encoding.fbs;
 
 public final class SettlType {
-    public static final short None = 0;
-    public static final short Physical = 1;
-    public static final short Cash = 2;
-    public static final String[] names = {"None", "Physical", "Cash",};
+  private SettlType() { }
+  public static final short None = 0;
+  public static final short Physical = 1;
+  public static final short Cash = 2;
 
-    private SettlType() {
-    }
+  public static final String[] names = { "None", "Physical", "Cash", };
 
-    public static String name(int e) {
-        return names[e];
-    }
+  public static String name(int e) { return names[e]; }
 }
 

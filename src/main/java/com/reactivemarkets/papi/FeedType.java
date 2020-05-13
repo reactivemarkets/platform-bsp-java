@@ -14,15 +14,14 @@
  * limitations under the License.
  */
 
-package com.reactivemarkets.encoding.feed;
+package com.reactivemarkets.papi;
 
-public final class Side {
-  private Side() { }
-  public static final short Sell = -1;
-  public static final short None = 0;
-  public static final short Buy = 1;
+public final class FeedType {
+  private FeedType() { }
+  public static final short Default = 0;
+  public static final short Trade = 1;
 
-  public static final String[] names = { "Sell", "None", "Buy", };
+  public static final String[] names = { "Default", "Trade", };
 
-  public static String name(int e) { return names[e - Sell]; }
+  public static String name(int e) { return names[e]; }
 }

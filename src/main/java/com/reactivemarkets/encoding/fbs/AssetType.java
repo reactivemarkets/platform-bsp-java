@@ -3,21 +3,18 @@
 package com.reactivemarkets.encoding.fbs;
 
 public final class AssetType {
-    public static final short None = 0;
-    public static final short Cmdty = 1;
-    public static final short Corp = 2;
-    public static final short Ccy = 3;
-    public static final short Eqty = 4;
-    public static final short Govt = 5;
-    public static final short Index = 6;
-    public static final short Crypto = 7;
-    public static final String[] names = {"None", "Cmdty", "Corp", "Ccy", "Eqty", "Govt", "Index", "Crypto",};
+  private AssetType() { }
+  public static final short None = 0;
+  public static final short Cmdty = 1;
+  public static final short Corp = 2;
+  public static final short Ccy = 3;
+  public static final short Eqty = 4;
+  public static final short Govt = 5;
+  public static final short Index = 6;
+  public static final short Crypto = 7;
 
-    private AssetType() {
-    }
+  public static final String[] names = { "None", "Cmdty", "Corp", "Ccy", "Eqty", "Govt", "Index", "Crypto", };
 
-    public static String name(int e) {
-        return names[e];
-    }
+  public static String name(int e) { return names[e]; }
 }
 

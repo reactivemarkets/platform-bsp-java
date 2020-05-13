@@ -2,47 +2,36 @@
 
 package com.reactivemarkets.encoding.fbs;
 
-import com.google.flatbuffers.FlatBufferBuilder;
-import com.google.flatbuffers.Struct;
-
-import java.nio.ByteBuffer;
+import java.nio.*;
+import java.lang.*;
+import java.util.*;
+import com.google.flatbuffers.*;
 
 @SuppressWarnings("unused")
 public final class MDLevel extends Struct {
-    public static int createMDLevel(FlatBufferBuilder builder, double qty, double price, double avgPrice, int count) {
-        builder.prep(8, 32);
-        builder.pad(4);
-        builder.putInt(count);
-        builder.putDouble(avgPrice);
-        builder.putDouble(price);
-        builder.putDouble(qty);
-        return builder.offset();
-    }
+  public void __init(int _i, ByteBuffer _bb) { __reset(_i, _bb); }
+  public MDLevel __assign(int _i, ByteBuffer _bb) { __init(_i, _bb); return this; }
 
-    public void __init(int _i, ByteBuffer _bb) {
-        bb_pos = _i;
-        bb = _bb;
-    }
+  public double qty() { return bb.getDouble(bb_pos + 0); }
+  public double price() { return bb.getDouble(bb_pos + 8); }
+  public double avgPrice() { return bb.getDouble(bb_pos + 16); }
+  public int count() { return bb.getInt(bb_pos + 24); }
 
-    public MDLevel __assign(int _i, ByteBuffer _bb) {
-        __init(_i, _bb);
-        return this;
-    }
+  public static int createMDLevel(FlatBufferBuilder builder, double qty, double price, double avgPrice, int count) {
+    builder.prep(8, 32);
+    builder.pad(4);
+    builder.putInt(count);
+    builder.putDouble(avgPrice);
+    builder.putDouble(price);
+    builder.putDouble(qty);
+    return builder.offset();
+  }
 
-    public double qty() {
-        return bb.getDouble(bb_pos + 0);
-    }
+  public static final class Vector extends BaseVector {
+    public Vector __assign(int _vector, int _element_size, ByteBuffer _bb) { __reset(_vector, _element_size, _bb); return this; }
 
-    public double price() {
-        return bb.getDouble(bb_pos + 8);
-    }
-
-    public double avgPrice() {
-        return bb.getDouble(bb_pos + 16);
-    }
-
-    public int count() {
-        return bb.getInt(bb_pos + 24);
-    }
+    public MDLevel get(int j) { return get(new MDLevel(), j); }
+    public MDLevel get(MDLevel obj, int j) {  return obj.__assign(__element(j), bb); }
+  }
 }
 

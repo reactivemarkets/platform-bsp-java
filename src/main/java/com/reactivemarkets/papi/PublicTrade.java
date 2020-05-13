@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.reactivemarkets.encoding.feed;
+package com.reactivemarkets.papi;
 
 import java.nio.*;
 import java.util.*;
@@ -22,9 +22,10 @@ import com.google.flatbuffers.*;
 
 @SuppressWarnings("unused")
 public final class PublicTrade extends Table {
+  public static void ValidateVersion() { Constants.FLATBUFFERS_1_12_0(); }
   public static PublicTrade getRootAsPublicTrade(ByteBuffer _bb) { return getRootAsPublicTrade(_bb, new PublicTrade()); }
   public static PublicTrade getRootAsPublicTrade(ByteBuffer _bb, PublicTrade obj) { _bb.order(ByteOrder.LITTLE_ENDIAN); return (obj.__assign(_bb.getInt(_bb.position()) + _bb.position(), _bb)); }
-  public void __init(int _i, ByteBuffer _bb) { bb_pos = _i; bb = _bb; vtable_start = bb_pos - bb.getInt(bb_pos); vtable_size = bb.getShort(vtable_start); }
+  public void __init(int _i, ByteBuffer _bb) { __reset(_i, _bb); }
   public PublicTrade __assign(int _i, ByteBuffer _bb) { __init(_i, _bb); return this; }
 
   public long sourceTs() { int o = __offset(4); return o != 0 ? bb.getLong(o + bb_pos) : 0L; }
@@ -39,7 +40,7 @@ public final class PublicTrade extends Table {
   public ByteBuffer tradeIdAsByteBuffer() { return __vector_as_bytebuffer(12, 1); }
   public ByteBuffer tradeIdInByteBuffer(ByteBuffer _bb) { return __vector_in_bytebuffer(_bb, 12, 1); }
   public int flags() { int o = __offset(14); return o != 0 ? bb.getShort(o + bb_pos) & 0xFFFF : 0; }
-  public short side() { int o = __offset(16); return o != 0 ? bb.getShort(o + bb_pos) : 0; }
+  public byte side() { int o = __offset(16); return o != 0 ? bb.get(o + bb_pos) : 0; }
   public double qty() { int o = __offset(18); return o != 0 ? bb.getDouble(o + bb_pos) : 0.0; }
   public double price() { int o = __offset(20); return o != 0 ? bb.getDouble(o + bb_pos) : 0.0; }
   public String execVenue() { int o = __offset(22); return o != 0 ? __string(o + bb_pos) : null; }
@@ -53,11 +54,11 @@ public final class PublicTrade extends Table {
       int feed_id,
       int trade_idOffset,
       int flags,
-      short side,
+      byte side,
       double qty,
       double price,
       int exec_venueOffset) {
-    builder.startObject(10);
+    builder.startTable(10);
     PublicTrade.addPrice(builder, price);
     PublicTrade.addQty(builder, qty);
     PublicTrade.addSourceTs(builder, source_ts);
@@ -66,25 +67,32 @@ public final class PublicTrade extends Table {
     PublicTrade.addFeedId(builder, feed_id);
     PublicTrade.addMarket(builder, marketOffset);
     PublicTrade.addSource(builder, sourceOffset);
-    PublicTrade.addSide(builder, side);
     PublicTrade.addFlags(builder, flags);
+    PublicTrade.addSide(builder, side);
     return PublicTrade.endPublicTrade(builder);
   }
 
-  public static void startPublicTrade(FlatBufferBuilder builder) { builder.startObject(10); }
+  public static void startPublicTrade(FlatBufferBuilder builder) { builder.startTable(10); }
   public static void addSourceTs(FlatBufferBuilder builder, long sourceTs) { builder.addLong(0, sourceTs, 0L); }
   public static void addSource(FlatBufferBuilder builder, int sourceOffset) { builder.addOffset(1, sourceOffset, 0); }
   public static void addMarket(FlatBufferBuilder builder, int marketOffset) { builder.addOffset(2, marketOffset, 0); }
   public static void addFeedId(FlatBufferBuilder builder, int feedId) { builder.addInt(3, feedId, 0); }
   public static void addTradeId(FlatBufferBuilder builder, int tradeIdOffset) { builder.addOffset(4, tradeIdOffset, 0); }
   public static void addFlags(FlatBufferBuilder builder, int flags) { builder.addShort(5, (short)flags, (short)0); }
-  public static void addSide(FlatBufferBuilder builder, short side) { builder.addShort(6, side, 0); }
+  public static void addSide(FlatBufferBuilder builder, byte side) { builder.addByte(6, side, 0); }
   public static void addQty(FlatBufferBuilder builder, double qty) { builder.addDouble(7, qty, 0.0); }
   public static void addPrice(FlatBufferBuilder builder, double price) { builder.addDouble(8, price, 0.0); }
   public static void addExecVenue(FlatBufferBuilder builder, int execVenueOffset) { builder.addOffset(9, execVenueOffset, 0); }
   public static int endPublicTrade(FlatBufferBuilder builder) {
-    int o = builder.endObject();
+    int o = builder.endTable();
     builder.required(o, 8);  // market
     return o;
+  }
+
+  public static final class Vector extends BaseVector {
+    public Vector __assign(int _vector, int _element_size, ByteBuffer _bb) { __reset(_vector, _element_size, _bb); return this; }
+
+    public PublicTrade get(int j) { return get(new PublicTrade(), j); }
+    public PublicTrade get(PublicTrade obj, int j) {  return obj.__assign(__indirect(__element(j), bb), bb); }
   }
 }

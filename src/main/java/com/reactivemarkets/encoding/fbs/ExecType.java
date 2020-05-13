@@ -3,27 +3,24 @@
 package com.reactivemarkets.encoding.fbs;
 
 public final class ExecType {
-    public static final short None = 0;
-    public static final short New = 1;
-    public static final short Revised = 2;
-    public static final short Cancelled = 3;
-    public static final short Trade = 4;
-    public static final short Rejected = 5;
-    public static final short Stopped = 6;
-    public static final short Expired = 7;
-    public static final short PendingNew = 8;
-    public static final short PendingRevise = 9;
-    public static final short PendingCancel = 10;
-    public static final short PendingSuspend = 11;
-    public static final short Suspended = 12;
-    public static final short PendingResume = 13;
-    public static final String[] names = {"None", "New", "Revised", "Cancelled", "Trade", "Rejected", "Stopped", "Expired", "PendingNew", "PendingRevise", "PendingCancel", "PendingSuspend", "Suspended", "PendingResume",};
+  private ExecType() { }
+  public static final short None = 0;
+  public static final short New = 1;
+  public static final short Revised = 2;
+  public static final short Cancelled = 3;
+  public static final short Trade = 4;
+  public static final short Rejected = 5;
+  public static final short Stopped = 6;
+  public static final short Expired = 7;
+  public static final short PendingNew = 8;
+  public static final short PendingRevise = 9;
+  public static final short PendingCancel = 10;
+  public static final short PendingSuspend = 11;
+  public static final short Suspended = 12;
+  public static final short PendingResume = 13;
 
-    private ExecType() {
-    }
+  public static final String[] names = { "None", "New", "Revised", "Cancelled", "Trade", "Rejected", "Stopped", "Expired", "PendingNew", "PendingRevise", "PendingCancel", "PendingSuspend", "Suspended", "PendingResume", };
 
-    public static String name(int e) {
-        return names[e];
-    }
+  public static String name(int e) { return names[e]; }
 }
 
