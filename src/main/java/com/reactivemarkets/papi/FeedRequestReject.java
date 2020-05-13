@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.reactivemarkets.encoding.feed;
+package com.reactivemarkets.papi;
 
 import java.nio.*;
 import java.util.*;
@@ -22,9 +22,10 @@ import com.google.flatbuffers.*;
 
 @SuppressWarnings("unused")
 public final class FeedRequestReject extends Table {
+  public static void ValidateVersion() { Constants.FLATBUFFERS_1_12_0(); }
   public static FeedRequestReject getRootAsFeedRequestReject(ByteBuffer _bb) { return getRootAsFeedRequestReject(_bb, new FeedRequestReject()); }
   public static FeedRequestReject getRootAsFeedRequestReject(ByteBuffer _bb, FeedRequestReject obj) { _bb.order(ByteOrder.LITTLE_ENDIAN); return (obj.__assign(_bb.getInt(_bb.position()) + _bb.position(), _bb)); }
-  public void __init(int _i, ByteBuffer _bb) { bb_pos = _i; bb = _bb; vtable_start = bb_pos - bb.getInt(bb_pos); vtable_size = bb.getShort(vtable_start); }
+  public void __init(int _i, ByteBuffer _bb) { __reset(_i, _bb); }
   public FeedRequestReject __assign(int _i, ByteBuffer _bb) { __init(_i, _bb); return this; }
 
   public String reqId() { int o = __offset(4); return o != 0 ? __string(o + bb_pos) : null; }
@@ -39,19 +40,26 @@ public final class FeedRequestReject extends Table {
       int req_idOffset,
       int error_code,
       int error_messageOffset) {
-    builder.startObject(3);
+    builder.startTable(3);
     FeedRequestReject.addErrorMessage(builder, error_messageOffset);
     FeedRequestReject.addErrorCode(builder, error_code);
     FeedRequestReject.addReqId(builder, req_idOffset);
     return FeedRequestReject.endFeedRequestReject(builder);
   }
 
-  public static void startFeedRequestReject(FlatBufferBuilder builder) { builder.startObject(3); }
+  public static void startFeedRequestReject(FlatBufferBuilder builder) { builder.startTable(3); }
   public static void addReqId(FlatBufferBuilder builder, int reqIdOffset) { builder.addOffset(0, reqIdOffset, 0); }
   public static void addErrorCode(FlatBufferBuilder builder, int errorCode) { builder.addInt(1, errorCode, 0); }
   public static void addErrorMessage(FlatBufferBuilder builder, int errorMessageOffset) { builder.addOffset(2, errorMessageOffset, 0); }
   public static int endFeedRequestReject(FlatBufferBuilder builder) {
-    int o = builder.endObject();
+    int o = builder.endTable();
     return o;
+  }
+
+  public static final class Vector extends BaseVector {
+    public Vector __assign(int _vector, int _element_size, ByteBuffer _bb) { __reset(_vector, _element_size, _bb); return this; }
+
+    public FeedRequestReject get(int j) { return get(new FeedRequestReject(), j); }
+    public FeedRequestReject get(FeedRequestReject obj, int j) {  return obj.__assign(__indirect(__element(j), bb), bb); }
   }
 }

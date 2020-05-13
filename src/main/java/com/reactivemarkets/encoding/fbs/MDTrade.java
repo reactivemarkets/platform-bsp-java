@@ -2,47 +2,36 @@
 
 package com.reactivemarkets.encoding.fbs;
 
-import com.google.flatbuffers.FlatBufferBuilder;
-import com.google.flatbuffers.Struct;
-
-import java.nio.ByteBuffer;
+import java.nio.*;
+import java.lang.*;
+import java.util.*;
+import com.google.flatbuffers.*;
 
 @SuppressWarnings("unused")
 public final class MDTrade extends Struct {
-    public static int createMDTrade(FlatBufferBuilder builder, long transTs, short side, double qty, double price) {
-        builder.prep(8, 32);
-        builder.putDouble(price);
-        builder.putDouble(qty);
-        builder.pad(6);
-        builder.putShort(side);
-        builder.putLong(transTs);
-        return builder.offset();
-    }
+  public void __init(int _i, ByteBuffer _bb) { __reset(_i, _bb); }
+  public MDTrade __assign(int _i, ByteBuffer _bb) { __init(_i, _bb); return this; }
 
-    public void __init(int _i, ByteBuffer _bb) {
-        bb_pos = _i;
-        bb = _bb;
-    }
+  public long transTs() { return bb.getLong(bb_pos + 0); }
+  public short side() { return bb.getShort(bb_pos + 8); }
+  public double qty() { return bb.getDouble(bb_pos + 16); }
+  public double price() { return bb.getDouble(bb_pos + 24); }
 
-    public MDTrade __assign(int _i, ByteBuffer _bb) {
-        __init(_i, _bb);
-        return this;
-    }
+  public static int createMDTrade(FlatBufferBuilder builder, long transTs, short side, double qty, double price) {
+    builder.prep(8, 32);
+    builder.putDouble(price);
+    builder.putDouble(qty);
+    builder.pad(6);
+    builder.putShort(side);
+    builder.putLong(transTs);
+    return builder.offset();
+  }
 
-    public long transTs() {
-        return bb.getLong(bb_pos + 0);
-    }
+  public static final class Vector extends BaseVector {
+    public Vector __assign(int _vector, int _element_size, ByteBuffer _bb) { __reset(_vector, _element_size, _bb); return this; }
 
-    public short side() {
-        return bb.getShort(bb_pos + 8);
-    }
-
-    public double qty() {
-        return bb.getDouble(bb_pos + 16);
-    }
-
-    public double price() {
-        return bb.getDouble(bb_pos + 24);
-    }
+    public MDTrade get(int j) { return get(new MDTrade(), j); }
+    public MDTrade get(MDTrade obj, int j) {  return obj.__assign(__element(j), bb); }
+  }
 }
 

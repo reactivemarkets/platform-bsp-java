@@ -20,5 +20,5 @@
         "https://checkstyle.org/dtds/suppressions_1_0.dtd">
 <suppressions>
     <suppress checks="." files="com[\\/]reactivemarkets[\\/]encoding[\\/]fbs[\\/]*"/>
-    <suppress checks="." files="com[\\/]reactivemarkets[\\/]encoding[\\/]feed[\\/]*"/>
+    <suppress checks="." files="com[\\/]reactivemarkets[\\/]papi[\\/]*"/>
 </suppressions>

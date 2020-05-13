@@ -3,16 +3,13 @@
 package com.reactivemarkets.encoding.fbs;
 
 public final class Direct {
-    public static final short Given = -1;
-    public static final short None = 0;
-    public static final short Paid = 1;
-    public static final String[] names = {"Given", "None", "Paid",};
+  private Direct() { }
+  public static final short Given = -1;
+  public static final short None = 0;
+  public static final short Paid = 1;
 
-    private Direct() {
-    }
+  public static final String[] names = { "Given", "None", "Paid", };
 
-    public static String name(int e) {
-        return names[e - Given];
-    }
+  public static String name(int e) { return names[e - Given]; }
 }
 

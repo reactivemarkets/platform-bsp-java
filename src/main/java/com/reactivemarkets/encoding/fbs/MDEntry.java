@@ -2,46 +2,35 @@
 
 package com.reactivemarkets.encoding.fbs;
 
-import com.google.flatbuffers.FlatBufferBuilder;
-import com.google.flatbuffers.Struct;
-
-import java.nio.ByteBuffer;
+import java.nio.*;
+import java.lang.*;
+import java.util.*;
+import com.google.flatbuffers.*;
 
 @SuppressWarnings("unused")
 public final class MDEntry extends Struct {
-    public static int createMDEntry(FlatBufferBuilder builder, int level, int venueId, double qty, double price) {
-        builder.prep(8, 24);
-        builder.putDouble(price);
-        builder.putDouble(qty);
-        builder.putInt(venueId);
-        builder.putInt(level);
-        return builder.offset();
-    }
+  public void __init(int _i, ByteBuffer _bb) { __reset(_i, _bb); }
+  public MDEntry __assign(int _i, ByteBuffer _bb) { __init(_i, _bb); return this; }
 
-    public void __init(int _i, ByteBuffer _bb) {
-        bb_pos = _i;
-        bb = _bb;
-    }
+  public int level() { return bb.getInt(bb_pos + 0); }
+  public int venueId() { return bb.getInt(bb_pos + 4); }
+  public double qty() { return bb.getDouble(bb_pos + 8); }
+  public double price() { return bb.getDouble(bb_pos + 16); }
 
-    public MDEntry __assign(int _i, ByteBuffer _bb) {
-        __init(_i, _bb);
-        return this;
-    }
+  public static int createMDEntry(FlatBufferBuilder builder, int level, int venueId, double qty, double price) {
+    builder.prep(8, 24);
+    builder.putDouble(price);
+    builder.putDouble(qty);
+    builder.putInt(venueId);
+    builder.putInt(level);
+    return builder.offset();
+  }
 
-    public int level() {
-        return bb.getInt(bb_pos + 0);
-    }
+  public static final class Vector extends BaseVector {
+    public Vector __assign(int _vector, int _element_size, ByteBuffer _bb) { __reset(_vector, _element_size, _bb); return this; }
 
-    public int venueId() {
-        return bb.getInt(bb_pos + 4);
-    }
-
-    public double qty() {
-        return bb.getDouble(bb_pos + 8);
-    }
-
-    public double price() {
-        return bb.getDouble(bb_pos + 16);
-    }
+    public MDEntry get(int j) { return get(new MDEntry(), j); }
+    public MDEntry get(MDEntry obj, int j) {  return obj.__assign(__element(j), bb); }
+  }
 }
 

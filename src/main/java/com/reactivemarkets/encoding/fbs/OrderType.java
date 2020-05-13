@@ -3,16 +3,13 @@
 package com.reactivemarkets.encoding.fbs;
 
 public final class OrderType {
-    public static final short None = 0;
-    public static final short Limit = 1;
-    public static final short Market = 2;
-    public static final String[] names = {"None", "Limit", "Market",};
+  private OrderType() { }
+  public static final short None = 0;
+  public static final short Limit = 1;
+  public static final short Market = 2;
 
-    private OrderType() {
-    }
+  public static final String[] names = { "None", "Limit", "Market", };
 
-    public static String name(int e) {
-        return names[e];
-    }
+  public static String name(int e) { return names[e]; }
 }
 

@@ -3,26 +3,27 @@
 package com.reactivemarkets.encoding.fbs;
 
 public final class Body {
-    public static final byte NONE = 0;
-    public static final byte Asset = 1;
-    public static final byte Instr = 2;
-    public static final byte Venue = 3;
-    public static final byte Market = 4;
-    public static final byte Order = 5;
-    public static final byte Exec = 6;
-    public static final byte Posn = 7;
-    public static final byte MarketData = 8;
-    public static final byte MarketInfo = 9;
-    public static final byte RevalRates = 10;
-    public static final byte PublicTrade = 11;
-    public static final byte FullAmount = 12;
-    public static final String[] names = {"NONE", "Asset", "Instr", "Venue", "Market", "Order", "Exec", "Posn", "MarketData", "MarketInfo", "RevalRates", "PublicTrade", "FullAmount",};
+  private Body() { }
+  public static final byte NONE = 0;
+  public static final byte Asset = 1;
+  public static final byte Instr = 2;
+  public static final byte Venue = 3;
+  public static final byte Market = 4;
+  public static final byte Order = 5;
+  public static final byte Exec = 6;
+  public static final byte Posn = 7;
+  public static final byte MarketData = 8;
+  public static final byte MarketInfo = 9;
+  public static final byte RevalRates = 10;
+  public static final byte PublicTrade = 11;
+  public static final byte FullAmount = 12;
+  public static final byte Quote = 13;
+  public static final byte DealerQuote = 14;
+  public static final byte MarketDataRequest = 15;
+  public static final byte MarketDataRequestReject = 16;
 
-    private Body() {
-    }
+  public static final String[] names = { "NONE", "Asset", "Instr", "Venue", "Market", "Order", "Exec", "Posn", "MarketData", "MarketInfo", "RevalRates", "PublicTrade", "FullAmount", "Quote", "DealerQuote", "MarketDataRequest", "MarketDataRequestReject", };
 
-    public static String name(int e) {
-        return names[e];
-    }
+  public static String name(int e) { return names[e]; }
 }
 

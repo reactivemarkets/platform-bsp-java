@@ -14,7 +14,7 @@
  * limitations under the License.
  */
 
-package com.reactivemarkets.encoding.feed;
+package com.reactivemarkets.papi;
 
 import java.nio.*;
 import java.util.*;
@@ -22,9 +22,10 @@ import com.google.flatbuffers.*;
 
 @SuppressWarnings("unused")
 public final class MDSnapshotL2 extends Table {
+  public static void ValidateVersion() { Constants.FLATBUFFERS_1_12_0(); }
   public static MDSnapshotL2 getRootAsMDSnapshotL2(ByteBuffer _bb) { return getRootAsMDSnapshotL2(_bb, new MDSnapshotL2()); }
   public static MDSnapshotL2 getRootAsMDSnapshotL2(ByteBuffer _bb, MDSnapshotL2 obj) { _bb.order(ByteOrder.LITTLE_ENDIAN); return (obj.__assign(_bb.getInt(_bb.position()) + _bb.position(), _bb)); }
-  public void __init(int _i, ByteBuffer _bb) { bb_pos = _i; bb = _bb; vtable_start = bb_pos - bb.getInt(bb_pos); vtable_size = bb.getShort(vtable_start); }
+  public void __init(int _i, ByteBuffer _bb) { __reset(_i, _bb); }
   public MDSnapshotL2 __assign(int _i, ByteBuffer _bb) { __init(_i, _bb); return this; }
 
   public long sourceTs() { int o = __offset(4); return o != 0 ? bb.getLong(o + bb_pos) : 0L; }
@@ -38,12 +39,16 @@ public final class MDSnapshotL2 extends Table {
   public long id() { int o = __offset(12); return o != 0 ? bb.getLong(o + bb_pos) : 0L; }
   public short depth() { int o = __offset(14); return o != 0 ? bb.getShort(o + bb_pos) : 0; }
   public int flags() { int o = __offset(16); return o != 0 ? bb.getShort(o + bb_pos) & 0xFFFF : 0; }
-  public MDLevel2 bidSide(int j) { return bidSide(new MDLevel2(), j); }
-  public MDLevel2 bidSide(MDLevel2 obj, int j) { int o = __offset(18); return o != 0 ? obj.__assign(__vector(o) + j * 16, bb) : null; }
+  public com.reactivemarkets.papi.MDLevel2 bidSide(int j) { return bidSide(new com.reactivemarkets.papi.MDLevel2(), j); }
+  public com.reactivemarkets.papi.MDLevel2 bidSide(com.reactivemarkets.papi.MDLevel2 obj, int j) { int o = __offset(18); return o != 0 ? obj.__assign(__vector(o) + j * 16, bb) : null; }
   public int bidSideLength() { int o = __offset(18); return o != 0 ? __vector_len(o) : 0; }
-  public MDLevel2 offerSide(int j) { return offerSide(new MDLevel2(), j); }
-  public MDLevel2 offerSide(MDLevel2 obj, int j) { int o = __offset(20); return o != 0 ? obj.__assign(__vector(o) + j * 16, bb) : null; }
+  public com.reactivemarkets.papi.MDLevel2.Vector bidSideVector() { return bidSideVector(new com.reactivemarkets.papi.MDLevel2.Vector()); }
+  public com.reactivemarkets.papi.MDLevel2.Vector bidSideVector(com.reactivemarkets.papi.MDLevel2.Vector obj) { int o = __offset(18); return o != 0 ? obj.__assign(__vector(o), 16, bb) : null; }
+  public com.reactivemarkets.papi.MDLevel2 offerSide(int j) { return offerSide(new com.reactivemarkets.papi.MDLevel2(), j); }
+  public com.reactivemarkets.papi.MDLevel2 offerSide(com.reactivemarkets.papi.MDLevel2 obj, int j) { int o = __offset(20); return o != 0 ? obj.__assign(__vector(o) + j * 16, bb) : null; }
   public int offerSideLength() { int o = __offset(20); return o != 0 ? __vector_len(o) : 0; }
+  public com.reactivemarkets.papi.MDLevel2.Vector offerSideVector() { return offerSideVector(new com.reactivemarkets.papi.MDLevel2.Vector()); }
+  public com.reactivemarkets.papi.MDLevel2.Vector offerSideVector(com.reactivemarkets.papi.MDLevel2.Vector obj) { int o = __offset(20); return o != 0 ? obj.__assign(__vector(o), 16, bb) : null; }
 
   public static int createMDSnapshotL2(FlatBufferBuilder builder,
       long source_ts,
@@ -55,7 +60,7 @@ public final class MDSnapshotL2 extends Table {
       int flags,
       int bid_sideOffset,
       int offer_sideOffset) {
-    builder.startObject(9);
+    builder.startTable(9);
     MDSnapshotL2.addId(builder, id);
     MDSnapshotL2.addSourceTs(builder, source_ts);
     MDSnapshotL2.addOfferSide(builder, offer_sideOffset);
@@ -68,7 +73,7 @@ public final class MDSnapshotL2 extends Table {
     return MDSnapshotL2.endMDSnapshotL2(builder);
   }
 
-  public static void startMDSnapshotL2(FlatBufferBuilder builder) { builder.startObject(9); }
+  public static void startMDSnapshotL2(FlatBufferBuilder builder) { builder.startTable(9); }
   public static void addSourceTs(FlatBufferBuilder builder, long sourceTs) { builder.addLong(0, sourceTs, 0L); }
   public static void addSource(FlatBufferBuilder builder, int sourceOffset) { builder.addOffset(1, sourceOffset, 0); }
   public static void addMarket(FlatBufferBuilder builder, int marketOffset) { builder.addOffset(2, marketOffset, 0); }
@@ -81,8 +86,15 @@ public final class MDSnapshotL2 extends Table {
   public static void addOfferSide(FlatBufferBuilder builder, int offerSideOffset) { builder.addOffset(8, offerSideOffset, 0); }
   public static void startOfferSideVector(FlatBufferBuilder builder, int numElems) { builder.startVector(16, numElems, 8); }
   public static int endMDSnapshotL2(FlatBufferBuilder builder) {
-    int o = builder.endObject();
+    int o = builder.endTable();
     builder.required(o, 8);  // market
     return o;
+  }
+
+  public static final class Vector extends BaseVector {
+    public Vector __assign(int _vector, int _element_size, ByteBuffer _bb) { __reset(_vector, _element_size, _bb); return this; }
+
+    public MDSnapshotL2 get(int j) { return get(new MDSnapshotL2(), j); }
+    public MDSnapshotL2 get(MDSnapshotL2 obj, int j) {  return obj.__assign(__indirect(__element(j), bb), bb); }
   }
 }

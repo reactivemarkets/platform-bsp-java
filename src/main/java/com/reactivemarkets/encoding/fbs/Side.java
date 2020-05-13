@@ -3,16 +3,13 @@
 package com.reactivemarkets.encoding.fbs;
 
 public final class Side {
-    public static final short Sell = -1;
-    public static final short None = 0;
-    public static final short Buy = 1;
-    public static final String[] names = {"Sell", "None", "Buy",};
+  private Side() { }
+  public static final short Sell = -1;
+  public static final short None = 0;
+  public static final short Buy = 1;
 
-    private Side() {
-    }
+  public static final String[] names = { "Sell", "None", "Buy", };
 
-    public static String name(int e) {
-        return names[e - Sell];
-    }
+  public static String name(int e) { return names[e - Sell]; }
 }
 

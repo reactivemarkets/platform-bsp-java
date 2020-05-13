@@ -14,13 +14,14 @@
  * limitations under the License.
  */
 
-package com.reactivemarkets.encoding.feed;
+package com.reactivemarkets.papi;
 
-public final class FeedType {
-  private FeedType() { }
-  public static final short Default = 0;
+public final class SubReqType {
+  private SubReqType() { }
+  public static final byte Subscribe = 1;
+  public static final byte Unsubscribe = 2;
 
-  public static final String[] names = { "Default", };
+  public static final String[] names = { "Subscribe", "Unsubscribe", };
 
-  public static String name(int e) { return names[e]; }
+  public static String name(int e) { return names[e - Subscribe]; }
 }

@@ -3,15 +3,13 @@
 package com.reactivemarkets.encoding.fbs;
 
 public final class VenueFlag {
-    public static final short OrderBook = 1;
-    public static final short FullAmount = 2;
-    public static final String[] names = {"OrderBook", "FullAmount",};
+  private VenueFlag() { }
+  public static final short OrderBook = 1;
+  public static final short FullAmount = 2;
+  public static final short Indicative = 4;
 
-    private VenueFlag() {
-    }
+  public static final String[] names = { "OrderBook", "FullAmount", "", "Indicative", };
 
-    public static String name(int e) {
-        return names[e - OrderBook];
-    }
+  public static String name(int e) { return names[e - OrderBook]; }
 }
 
