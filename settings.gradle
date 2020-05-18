@@ -14,4 +14,4 @@
  * limitations under the License.
  */
 
-rootProject.name = 'platform-java'
+rootProject.name = 'platform-bsp-java'
